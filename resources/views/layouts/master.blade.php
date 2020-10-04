@@ -14,9 +14,9 @@
   <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- CSS Files -->
-  <link href="../assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
+  <link href="{{ asset('assets/css/material-dashboard.css?v=2.1.0') }}" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="../assets/demo/demo.css" rel="stylesheet" />
+  <link href="{{ asset('assets/demo/demo.css') }}" rel="stylesheet" />
 </head>
 
 <body class="dark-edition">
@@ -38,17 +38,24 @@
               <p>Dashboard</p>
             </a>
           </li>
-          <li class="nav-item">
-            <a href="" class="nav-link">
+          <li class="nav-item {{ (Request::is('products')?'active':'') }}">
+            <a href="{{ route('product.index') }}" class="nav-link">
               <i class="material-icons">attachment</i>
               <p>Products</p>
             </a>
           </li>
           @if(Auth::user()->hasRole('Super_User'))
-          <li class="nav-item {{ (Request::is('admin/resellers')?'active':'') }}">
+          <li class="nav-item {{ (Request::is('admin/resellers')?'active':'') }}
+                              {{ (Request::is('admin/reseller/create')?'active':'') }}">
             <a href="{{ route('admin.reseller.index') }}" class="nav-link">
               <i class="material-icons">account_circle</i>
               <p>Resellers</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <i class="material-icons">card_giftcard</i>
+              <p>Discounts</p>
             </a>
           </li>
           @endif

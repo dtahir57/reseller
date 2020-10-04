@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\Discount;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\User;
-use App\Http\Requests\ResellerRequest;
-use Session;
 
-class ResellerController extends Controller
+class DiscountController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +14,7 @@ class ResellerController extends Controller
      */
     public function index()
     {
-        $users = User::whereHas("roles", function($q){ 
-            $q->where("name", "Reseller"); 
-        })->get();
-        return view('admin.resellers.index', compact('users'));
+        //
     }
 
     /**
@@ -30,7 +24,7 @@ class ResellerController extends Controller
      */
     public function create()
     {
-        return view('admin.resellers.create');
+        //
     }
 
     /**
@@ -39,16 +33,9 @@ class ResellerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ResellerRequest $request)
+    public function store(Request $request)
     {
-        $user = new User;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->save();
-        $user->assignRole('Reseller');
-        Session::flash('created', 'New Reseller Created Successfully!');
-        return redirect()->route('admin.reseller.index');
+        //
     }
 
     /**
@@ -93,9 +80,6 @@ class ResellerController extends Controller
      */
     public function destroy($id)
     {
-        $user = User::find($id);
-        $user->delete();
-        Session::flash('deleted', 'User Deleted Successfully!');
-        return redirect()->route('admin.reseller.index');
+        //
     }
 }
