@@ -23,6 +23,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('logout', 'HomeController@logout')->name('user.logout');
+    Route::group(['middleware' => 'role:Super_User', 'prefix' => 'admin'], function () {
+        Route::get('resellers', 'Admin\ResellerController@index')->name('admin.reseller.index');
+    });
 });
 
 Route::get('register', function() {

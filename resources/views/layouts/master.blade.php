@@ -27,7 +27,7 @@
 
         Tip 2: you can also add an image using data-image tag
     -->
-      <div class="logo"><a href="http://www.creative-tim.com" class="simple-text logo-normal">
+      <div class="logo"><a href="" class="simple-text logo-normal">
           Rangrez
         </a></div>
       <div class="sidebar-wrapper">
@@ -38,6 +38,20 @@
               <p>Dashboard</p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="" class="nav-link">
+              <i class="material-icons">attachment</i>
+              <p>Products</p>
+            </a>
+          </li>
+          @if(Auth::user()->hasRole('Super_User'))
+          <li class="nav-item {{ (Request::is('admin/resellers')?'active':'') }}">
+            <a href="{{ route('admin.reseller.index') }}" class="nav-link">
+              <i class="material-icons">account_circle</i>
+              <p>Resellers</p>
+            </a>
+          </li>
+          @endif
         </ul>
       </div>
     </div>
@@ -75,33 +89,8 @@
       </div>
       <footer class="footer">
         <div class="container-fluid">
-          <nav class="float-left">
-            <ul>
-              <li>
-                <a href="https://www.creative-tim.com">
-                  Creative Tim
-                </a>
-              </li>
-              <li>
-                <a href="https://creative-tim.com/presentation">
-                  About Us
-                </a>
-              </li>
-              <li>
-                <a href="http://blog.creative-tim.com">
-                  Blog
-                </a>
-              </li>
-              <li>
-                <a href="https://www.creative-tim.com/license">
-                  Licenses
-                </a>
-              </li>
-            </ul>
-          </nav>
           <div class="copyright float-right" id="date">
-            , made with <i class="material-icons">favorite</i> by
-            <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+            <a href="" target="_blank">Rangrez</a> All Rights Reserved.
           </div>
         </div>
       </footer>
