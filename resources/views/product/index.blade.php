@@ -19,7 +19,10 @@
                   <div class="table-responsive">
                     <table class="table">
                       <thead class=" text-primary">
+                        <th>#</th>
                         <th>Product ID</th>
+                        <th>Product Title</th>
+                        {{-- <th>Product Description</th> --}}
                         <th>SKU</th>
                         <th>Virtual</th>
                         <th>Downloadable</th>
@@ -35,9 +38,16 @@
                         <th>Tax Class</th>
                       </thead>
                       <tbody>
-                        @foreach($products as $product)
+                        @foreach($products as $p)
+                        @php
+                            $product = DB::connection('mysql2')->table('wpjo_wc_product_meta_lookup')->where('product_id', $p->ID)->first();
+                        @endphp
+                        @if ($product)
                         <tr>
-                            <td>{{ $product->product_id }}</td>
+                            <td>{{ $loop->index + 1 }}</td>
+                            <td>{{ $p->ID }}</td>
+                            <td>{{ $p->post_title }}</td>
+                            {{-- <td>{!! $p->post_excerpt !!}</td> --}}
                             <td>{{ $product->sku }}</td>
                             <td>
                                 @if($product->virtual)
@@ -70,6 +80,7 @@
                             <td>{{ $product->tax_status }}</td>
                             <td>{{ $product->tax_class }}</td>
                         </tr>
+                        @endif
                         @endforeach
                       </tbody>
                       <tfoot>{!! $products->render() !!}</tfoot>

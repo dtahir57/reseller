@@ -13,12 +13,12 @@ class RoleSeeder extends Seeder
     public function run()
     {
         $role = new Role;
-        $role->setConnection('mysql2');
+        $role->setConnection('mysql');
         $role->name = 'Reseller';
         $role->save();
 
         $role = new Role;
-        $role->setConnection('mysql2');
+        $role->setConnection('mysql');
         $role->name = 'Super_User';
         $role->save();
     }

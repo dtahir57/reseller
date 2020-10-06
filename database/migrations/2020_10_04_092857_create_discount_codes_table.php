@@ -13,7 +13,7 @@ class CreateDiscountCodesTable extends Migration
      */
     public function up()
     {
-        Schema::connection('mysql2')->create('discount_codes', function (Blueprint $table) {
+        Schema::connection('mysql')->create('discount_codes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('reseller_id')->unsigned();
             $table->integer('product_id')->unsigned();
@@ -29,6 +29,6 @@ class CreateDiscountCodesTable extends Migration
      */
     public function down()
     {
-        Schema::connection('mysql2')->dropIfExists('discount_codes');
+        Schema::connection('mysql')->dropIfExists('discount_codes');
     }
 }

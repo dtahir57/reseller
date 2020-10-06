@@ -255,31 +255,11 @@
       array (
         'driver' => 'sqlite',
         'url' => NULL,
-        'database' => 'rangrez',
+        'database' => 'reseller',
         'prefix' => '',
         'foreign_key_constraints' => true,
       ),
       'mysql' => 
-      array (
-        'driver' => 'mysql',
-        'url' => NULL,
-        'host' => '127.0.0.1',
-        'port' => '3306',
-        'database' => 'rangrez',
-        'username' => 'danish',
-        'password' => 'danish',
-        'unix_socket' => '',
-        'charset' => 'utf8mb4',
-        'collation' => 'utf8mb4_unicode_ci',
-        'prefix' => '',
-        'prefix_indexes' => true,
-        'strict' => true,
-        'engine' => NULL,
-        'options' => 
-        array (
-        ),
-      ),
-      'mysql2' => 
       array (
         'driver' => 'mysql',
         'url' => NULL,
@@ -299,13 +279,33 @@
         array (
         ),
       ),
+      'mysql2' => 
+      array (
+        'driver' => 'mysql',
+        'url' => NULL,
+        'host' => '127.0.0.1',
+        'port' => '3306',
+        'database' => 'rangrez',
+        'username' => 'danish',
+        'password' => 'danish',
+        'unix_socket' => '',
+        'charset' => 'utf8mb4',
+        'collation' => 'utf8mb4_unicode_ci',
+        'prefix' => '',
+        'prefix_indexes' => true,
+        'strict' => true,
+        'engine' => NULL,
+        'options' => 
+        array (
+        ),
+      ),
       'pgsql' => 
       array (
         'driver' => 'pgsql',
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'rangrez',
+        'database' => 'reseller',
         'username' => 'danish',
         'password' => 'danish',
         'charset' => 'utf8',
@@ -320,7 +320,7 @@
         'url' => NULL,
         'host' => '127.0.0.1',
         'port' => '3306',
-        'database' => 'rangrez',
+        'database' => 'reseller',
         'username' => 'danish',
         'password' => 'danish',
         'charset' => 'utf8',

@@ -20,21 +20,21 @@ class CreatePermissionTables extends Migration
             throw new \Exception('Error: config/permission.php not loaded. Run [php artisan config:clear] and try again.');
         }
 
-        Schema::connection('mysql2')->create($tableNames['permissions'], function (Blueprint $table) {
+        Schema::connection('mysql')->create($tableNames['permissions'], function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('guard_name');
             $table->timestamps();
         });
 
-        Schema::connection('mysql2')->create($tableNames['roles'], function (Blueprint $table) {
+        Schema::connection('mysql')->create($tableNames['roles'], function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('guard_name');
             $table->timestamps();
         });
 
-        Schema::connection('mysql2')->create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames) {
+        Schema::connection('mysql')->create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames) {
             $table->unsignedBigInteger('permission_id');
 
             $table->string('model_type');
@@ -50,7 +50,7 @@ class CreatePermissionTables extends Migration
                     'model_has_permissions_permission_model_type_primary');
         });
 
-        Schema::connection('mysql2')->create($tableNames['model_has_roles'], function (Blueprint $table) use ($tableNames, $columnNames) {
+        Schema::connection('mysql')->create($tableNames['model_has_roles'], function (Blueprint $table) use ($tableNames, $columnNames) {
             $table->unsignedBigInteger('role_id');
 
             $table->string('model_type');
@@ -66,7 +66,7 @@ class CreatePermissionTables extends Migration
                     'model_has_roles_role_model_type_primary');
         });
 
-        Schema::connection('mysql2')->create($tableNames['role_has_permissions'], function (Blueprint $table) use ($tableNames) {
+        Schema::connection('mysql')->create($tableNames['role_has_permissions'], function (Blueprint $table) use ($tableNames) {
             $table->unsignedBigInteger('permission_id');
             $table->unsignedBigInteger('role_id');
 
@@ -101,10 +101,10 @@ class CreatePermissionTables extends Migration
             throw new \Exception('Error: config/permission.php not found and defaults could not be merged. Please publish the package configuration before proceeding, or drop the tables manually.');
         }
 
-        Schema::connection('mysql2')->drop($tableNames['role_has_permissions']);
-        Schema::connection('mysql2')->drop($tableNames['model_has_roles']);
-        Schema::connection('mysql2')->drop($tableNames['model_has_permissions']);
-        Schema::connection('mysql2')->drop($tableNames['roles']);
-        Schema::connection('mysql2')->drop($tableNames['permissions']);
+        Schema::connection('mysql')->drop($tableNames['role_has_permissions']);
+        Schema::connection('mysql')->drop($tableNames['model_has_roles']);
+        Schema::connection('mysql')->drop($tableNames['model_has_permissions']);
+        Schema::connection('mysql')->drop($tableNames['roles']);
+        Schema::connection('mysql')->drop($tableNames['permissions']);
     }
 }

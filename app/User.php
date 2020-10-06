@@ -9,7 +9,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    protected $connection = 'mysql2';
+    protected $connection = 'mysql';
     
     use Notifiable, HasRoles;
 

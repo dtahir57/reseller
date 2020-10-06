@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Product;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\DiscountCode;
 use DB;
-use App\Product;
 
-class ProductController extends Controller
+class DiscountController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +16,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = DB::connection('mysql2')->table('wpjo_posts')->where('post_type', 'product')->orWhere('post_type', 'product_variation')->orderBy('ID', 'DESC')->paginate(15);
-        return view('product.index', compact('products'));
+        $discount_codes = DB::connection('mysql')->table('discount_codes')->orderBy('id', 'DESC')->paginate(10);
+        return view('admin.discount.index', compact('discount_codes'));
     }
 
     /**
@@ -27,7 +27,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.discount.create');
     }
 
     /**

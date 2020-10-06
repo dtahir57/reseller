@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         $user = new User;
-        $user->setConnection('mysql2');
+        $user->setConnection('mysql');
         $user->name = 'Super User';
         $user->email = 'superuser@rangrez.com';
         $user->password = bcrypt('password');
@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
         $user->assignRole('Super_User');
 
         $user = new User;
-        $user->setConnection('mysql2');
+        $user->setConnection('mysql');
         $user->name = 'Reseller Account';
         $user->email = 'reseller@rangrez.com';
         $user->password = bcrypt('password');
