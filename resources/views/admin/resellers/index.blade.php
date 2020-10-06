@@ -2,6 +2,8 @@
 
 @section('title', 'Resellers')
 
+@section('page-title', 'Resellers')
+
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -21,9 +23,6 @@
                 <li class="alert alert-success">{{ session('deleted') }}</li>
             @endif
             <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Resellers</h4>
-                </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table">

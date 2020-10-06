@@ -2,6 +2,8 @@
 
 @section('title', 'New Discount')
 
+@section('page-title', 'Discounts')
+
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -20,7 +22,7 @@
                         @csrf 
                         <div class="row">
                             <div class="col-md-6 form-group">
-                                <input type="text" class="form-control" onchange="daniyal()" name="product" placeholder="Search Product" id="searchProduct" />
+                                <input type="text" class="form-control" name="product" placeholder="Search Product" id="searchProduct" />
                             </div>
                             <div class="col-md-6 form-group">
                                 <input type="text" class="form-control" name="reseller" placeholder="Search Reseller" id="searchReseller" />
@@ -41,17 +43,17 @@
 @endsection
 
 @section('scripts')
-<script>
+<script type="text/javascript">
     $(document).ready(function () {
-        // $('#searchProduct').on('change',function () {
-        //     var value = $(this).val();
-        //     console.log(value);
-        // });
+        $('#searchProduct').on('keyup', function () {
+            var productVal = $(this).val();
+            // 
+        });
 
-        // $('#searchReseller').change(function () {
-        //     console.log($(this).val());
-        // });
+        $('#searchReseller').on('keyup', function () {
+            var resellerVal = $(this).val();
+            // 
+        });
     });
-    
 </script>
 @endsection

@@ -2,13 +2,15 @@
 
 @section('title', 'Create New Reseller')
 
+@section('page-title', 'Resellers')
+
 @section('content')
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
-                    <h5>Create</h5>
+                    <h5>Create New Seller</h5>
                     <a href="{{ route('admin.reseller.index') }}" role="button" class="btn btn-success float-right">View All</a>
                 </div>
             </div>

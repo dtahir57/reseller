@@ -2,24 +2,19 @@
 
 @section('title', 'Products')
 
+@section('page-title', 'Products')
+
 @section('content')
 <div class="container-fluid">
-    <div class="card">
-        <div class="card-body">
-            <h4>Products</h4>
-        </div>
-    </div>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title">Products</h4>
-                </div>
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table">
                       <thead class=" text-primary">
-                        <th>#</th>
+                        <tr>
+                            <th>#</th>
                         <th>Product ID</th>
                         <th>Product Title</th>
                         {{-- <th>Product Description</th> --}}
@@ -36,6 +31,7 @@
                         <th>Total Sales</th>
                         <th>Tax Status</th>
                         <th>Tax Class</th>
+                        </tr>
                       </thead>
                       <tbody>
                         @foreach($products as $p)

@@ -2,6 +2,8 @@
 
 @section('title', 'Discounts')
 
+@section('page-title', 'Discounts')
+
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -15,9 +17,6 @@
         </div>
         <div class="col-md-12 mt-4">
             <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title">Discounts</h4>
-                </div>
                 <div class="card-body">
                     <div class="table-responsive">
                         <table class="table">
