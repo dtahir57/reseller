@@ -36,6 +36,8 @@ Route::group(['middleware' => 'auth'], function () {
          */
         Route::get('discounts', 'Admin\DiscountController@index')->name('admin.discount.index');
         Route::get('discount/create', 'Admin\DiscountController@create')->name('admin.discount.create');
+        Route::post('search_product', 'Admin\DiscountController@search_product')->name('admin.search_product');
+        Route::post('search_reseller', 'Admin\DiscountController@search_reseller')->name('admin.search_reseller');
         /**
          * Ending Routes For DiscountController
          */

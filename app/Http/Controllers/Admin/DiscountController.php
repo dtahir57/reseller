@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DiscountCode;
 use DB;
+use App\Product;
+use App\User;
 
 class DiscountController extends Controller
 {
@@ -84,5 +86,51 @@ class DiscountController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function search_product(Request $request)
+    {
+        $product_title = $request->product_title;
+        $output = '<ul id="List">';
+        if ($product_title) {
+            $products = Product::where('post_title', 'like', "%$product_title%")->where('post_type', 'product')->get();
+            foreach($products as $product) {
+                $output .= '<li>
+                                <a href="javascript:void(0)">
+                                    <span>Product ID: '.$product->ID.'</span><br />
+                                    <span>Product Title: '.$product->post_title.'</span>
+                                </a>
+                            </li>';
+            }
+        } else {
+            $output .= '<li>Product Not Found!</li>';
+        }
+        $output .= '</ul>';
+        $data = array('final' => $output);
+
+        return json_encode($data);
+    }
+
+    public function search_reseller(Request $request)
+    {
+        $email = $request->email;
+        $output = '<ul id="List">';
+        if ($email) {
+            $users = User::where('email', 'like', "%$email%")->get();
+            foreach($users as $user) {
+                $output .= '<li>
+                                <a href="javascript:void(0)">
+                                    <span>Name: '.$user->name.'</span>
+                                    <span>Email: '.$user->email.'</span>
+                                </a>
+                            </li>';
+            }
+        } else {
+            $output .= '<li>User Not Found</li>';
+        }
+        $output .= '</ul>';
+        $data = array('final' => $output);
+
+        return json_encode($data);
     }
 }
