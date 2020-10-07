@@ -36,8 +36,14 @@ Route::group(['middleware' => 'auth'], function () {
          */
         Route::get('discounts', 'Admin\DiscountController@index')->name('admin.discount.index');
         Route::get('discount/create', 'Admin\DiscountController@create')->name('admin.discount.create');
+        Route::post('discount', 'Admin\DiscountController@store')->name('admin.discount.store');
+        Route::get('discount/{id}/edit', 'Admin\DiscountController@edit')->name('admin.discount.edit');
+        Route::patch('discount/{id}', 'Admin\DiscountController@update')->name('admin.discount.update');
+        Route::get('discount/destroy/{id}', 'Admin\DiscountController@destroy')->name('admin.discount.destroy');
         Route::post('search_product', 'Admin\DiscountController@search_product')->name('admin.search_product');
         Route::post('search_reseller', 'Admin\DiscountController@search_reseller')->name('admin.search_reseller');
+        Route::post('get_product', 'Admin\DiscountController@get_product')->name('admin.get_product');
+        Route::post('get_reseller', 'Admin\DiscountController@get_reseller')->name('admin.get_reseller');
         /**
          * Ending Routes For DiscountController
          */

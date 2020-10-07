@@ -1,6 +1,8 @@
 @extends('layouts.master')
 
-@section('title', 'New Discount')
+@section('title', 'Edit Discount Code')
+
+@section('page-title', 'Discounts')
 
 @section('styles')
 <style>
@@ -31,48 +33,67 @@
     #selectedReseller {
         display: none;
     }
+    #search_product_div {
+        display: none;
+    }
+    #search_reseller_div {
+        display: none;
+    }
 </style>
 @endsection
 
-@section('page-title', 'Discounts')
-
 @section('content')
 <div class="container-fluid">
+    <div class="card">
+        <div class="card-body">
+            <h4>Edit Discounts</h4>
+            <a href="{{ route('admin.discount.index') }}" role="button" class="btn btn-success float-right"><i class="fa fa-th"></i> View All</a>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-12">
-            @if(session('error'))
-                <li class="alert alert-danger">{{ session('error') }}</li>
-            @endif
-            @foreach($errors->all() as $error)
-                <p class="text-danger">{{ $error }}</p>
-            @endforeach
             <div class="card">
                 <div class="card-body">
-                    <h4>Create Discount</h4>
-                    <a href="{{ route('admin.discount.index') }}" role="button" class="btn btn-success float-right">View All</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12 mt-4">
-            <div class="card">
-                <div class="card-body">
-                    <form action="{{ route('admin.discount.store') }}" method="POST">
+                    <form action="{{ route('admin.discount.update', $discount->id) }}" method="POST">
                         @csrf 
+                        <input type="hidden" name="_method" value="PATCH" />
                         <div class="row">
+                            <div class="col-md-6" id="edit_product_div">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">Product ID: {{ $product->ID }}</div>
+                                            <div class="col-md-6">Product Title: {{ $product->post_title }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="javascript:void(0)" onclick="change_product()">Click here to change Product</a>
+                            </div>
                             <div class="col-md-6 form-group" id="search_product_div">
                                 <input type="text" class="form-control" name="product_title" placeholder="Type Product Title" id="searchProduct" />
                                 <div id="products"></div>
                             </div>
                             <div class="col-md-6" id="selectedProduct"></div>
-                            <input type="hidden" name="product_id" id="product_id" />
+                            <input type="hidden" name="product_id" id="product_id" value="{{ $discount->product_id }}" />
+                            <div class="col-md-6" id="edit_reseller_div">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">Name: {{ $user->name }}</div>
+                                            <div class="col-md-6">Email: {{ $user->email }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a href="javascript:void(0)" onclick="change_reseller()">Click here to change Reseller</a>
+                            </div>
                             <div class="col-md-6 form-group" id="search_reseller_div">
                                 <input type="text" class="form-control" name="email" placeholder="Type Reseller Email" id="searchReseller" />
                                 <div id="resellers"></div>
                             </div>
                             <div class="col-md-6" id="selectedReseller"></div>
-                            <input type="hidden" name="reseller_id" id="reseller_id" />
+                            <input type="hidden" name="reseller_id" id="reseller_id" value="{{ $user->id }}" />
                             <div class="col-md-6 form-group">
-                                <input type="number" class="form-control" name="discount" min=1 placeholder="Discount %" required value="{{ old('discount') }}" />
+                                <input type="number" class="form-control" name="discount" min=1 placeholder="Discount %" required value="{{ $discount->discount }}" />
                             </div>
                             <div class="col-md-6 form-group">
                                 <input type="submit" class="btn btn-primary btn-block" value="Save" />
@@ -172,6 +193,16 @@
         $('#selectedReseller').hide();
         $('#search_reseller_div').show();
         $('#reseller_id').removeAttr("value");
+    }
+
+    function change_product() {
+        $('#edit_product_div').hide();
+        $('#search_product_div').show();
+    }
+
+    function change_reseller() {
+        $('#edit_reseller_div').hide();
+        $('#search_reseller_div').show();
     }
 </script>
 @endsection

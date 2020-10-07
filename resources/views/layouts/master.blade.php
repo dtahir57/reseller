@@ -58,7 +58,8 @@
             <li class="{{ (Request::is('admin/resellers')?'active':'') }}
             {{ (Request::is('admin/reseller/create')?'active':'') }}"><a href="{{ route('admin.reseller.index') }}"><i class="fa fa-users"></i> Resellers</a></li>
             <li class="{{ (Request::is('admin/discounts')?'active':'') }}
-            {{ (Request::is('admin/discount/create')?'active':'') }}"><a href="{{ route('admin.discount.index') }}"><i class="fa fa-percent"></i> Discounts</a></li>
+            {{ (Request::is('admin/discount/create')?'active':'') }}
+            {{ (Request::is('admin/discount/'.request()->route('id').'/edit')?'active':'') }}"><a href="{{ route('admin.discount.index') }}"><i class="fa fa-percent"></i> Discounts</a></li>
         </ul>
       </nav>
       <!-- Sidebar Navigation end-->
