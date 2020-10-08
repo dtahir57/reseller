@@ -52,6 +52,15 @@ Route::group(['middleware' => 'auth'], function () {
      * Ending Routes For Super_User Role
      */
     Route::get('products', 'Product\ProductController@index')->name('product.index');
+    /**
+     * Starting Routes For Order\OrderController
+     */
+    Route::group(['middleware' => 'role:Reseller'], function () {
+        Route::get('orders', 'Order\OrderController@index')->name('order.index');
+    });
+    /**
+     * Ending Routes For Order\OrderController
+     */
 });
 
 Route::get('register', function() {

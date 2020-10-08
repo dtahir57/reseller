@@ -55,11 +55,16 @@
         <ul class="list-unstyled">
             <li class="{{ (Request::is('home')?'active':'') }}"><a href="{{ route('home') }}"> <i class="icon-home"></i>Dashboard </a></li>
             <li class="{{ (Request::is('products')?'active':'') }}"><a href="{{ route('product.index') }}"><i class="fa fa-product-hunt"></i> Products</a></li>
+            @if (Auth::user()->hasRole('Super_User'))
             <li class="{{ (Request::is('admin/resellers')?'active':'') }}
             {{ (Request::is('admin/reseller/create')?'active':'') }}"><a href="{{ route('admin.reseller.index') }}"><i class="fa fa-users"></i> Resellers</a></li>
             <li class="{{ (Request::is('admin/discounts')?'active':'') }}
             {{ (Request::is('admin/discount/create')?'active':'') }}
             {{ (Request::is('admin/discount/'.request()->route('id').'/edit')?'active':'') }}"><a href="{{ route('admin.discount.index') }}"><i class="fa fa-percent"></i> Discounts</a></li>
+            @endif
+            @if(Auth::user()->hasRole('Reseller'))
+            <li class="{{ (Request::is('orders')?'active':'') }}"><a href="{{ route('order.index') }}"><i class="fa fa-shopping-cart"></i> Orders</a></li>
+            @endif
         </ul>
       </nav>
       <!-- Sidebar Navigation end-->
