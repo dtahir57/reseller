@@ -19,7 +19,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::post('user/register', 'UserController@register')->name('user.register');
+
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('terms_and_condition', 'UserController@terms_and_condition')->name('terms_and_condition');
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('logout', 'HomeController@logout')->name('user.logout');
@@ -61,8 +65,4 @@ Route::group(['middleware' => 'auth'], function () {
     /**
      * Ending Routes For Order\OrderController
      */
-});
-
-Route::get('register', function() {
-    return redirect()->route('login');
 });

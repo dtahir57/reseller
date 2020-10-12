@@ -26,6 +26,8 @@ class ResellerRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|unique:users',
+            'number' => 'required|string|max:13',
+            'city' => 'required|string',
             'password' => 'required|string|confirmed'
         ];
     }

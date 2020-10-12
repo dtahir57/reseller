@@ -31,6 +31,12 @@
                                 <input type="email" class="form-control" placeholder="Email" name="email" required value="{{ old('email') }}" />
                             </div>
                             <div class="col-md-6 form-group">
+                                <input type="text" class="form-control" placeholder="Number" name="number" required value="{{ old('number') }}" />
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <input type="text" class="form-control" placeholder="City" name="city" required value="{{ old('city') }}" />
+                            </div>
+                            <div class="col-md-6 form-group">
                                 <input type="password" class="form-control" placeholder="Password" name="password" required />
                             </div>
                             <div class="col-md-6 form-group">

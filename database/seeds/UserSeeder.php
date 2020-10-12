@@ -16,6 +16,8 @@ class UserSeeder extends Seeder
         $user->setConnection('mysql');
         $user->name = 'Super User';
         $user->email = 'superuser@rangrez.com';
+        $user->number = '+923361234567';
+        $user->city = 'Lahore';
         $user->password = bcrypt('password');
         $user->save();
         $user->assignRole('Super_User');
@@ -24,6 +26,8 @@ class UserSeeder extends Seeder
         $user->setConnection('mysql');
         $user->name = 'Reseller Account';
         $user->email = 'reseller@rangrez.com';
+        $user->number = '+923361234567';
+        $user->city = 'Karachi';
         $user->password = bcrypt('password');
         $user->save();
         $user->assignRole('Reseller');
