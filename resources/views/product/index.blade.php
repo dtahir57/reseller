@@ -12,7 +12,7 @@
                 <div class="card-body">
                   <div class="table-responsive">
                     <table class="table">
-                      <thead class=" text-primary">
+                      <thead class="text-primary">
                         <tr>
                             <th>#</th>
                         <th>Product ID</th>

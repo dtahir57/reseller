@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Order;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Product;
+use App\WordpressModels\Product;
 use DB;
+use App\Models\Order;
+use Auth;
+use App\Http\Requests\OrderRequest;
 
 class OrderController extends Controller
 {
@@ -16,14 +19,16 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $products = DB::connection('mysql2')->table('wpjo_posts')->where('post_type', 'shop_order')->paginate(15);
-        $postmeta = DB::connection('mysql2')->table('wpjo_postmeta')->where('post_id', 6660)->get();
-        dd($postmeta);
+        // $products = DB::connection('mysql2')->table('wpjo_posts')->where('post_type', 'shop_order')->paginate(15);
+        // $postmeta = DB::connection('mysql2')->table('wpjo_postmeta')->where('post_id', 5040)->get();
+        // dd($postmeta);
         // $order = DB::connection('mysql2')->table('wpjo_woocommerce_order_items')->paginate(10);
         // $texanomies = DB::connection('mysql2')->table('wpjo_postmeta')->paginate(20);
         // dd($texanomies);
         // dd($order);
-        dd($products);
+        // dd($products);
+        $orders = DB::table('orders')->where('user_id', Auth::user()->id)->paginate(15);
+        return view('orders.index', compact('orders'));
     }
 
     /**
@@ -33,7 +38,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
+        return view('orders.create');
     }
 
     /**
@@ -42,7 +47,7 @@ class OrderController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(OrderRequest $request)
     {
         //
     }

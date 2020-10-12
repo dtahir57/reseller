@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\WordpressModels;
 
 use Illuminate\Database\Eloquent\Model;
 

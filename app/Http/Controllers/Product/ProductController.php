@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Product;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
-use App\Product;
+use App\WordpressModels\Product;
 
 class ProductController extends Controller
 {

@@ -61,6 +61,8 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::group(['middleware' => 'role:Reseller'], function () {
         Route::get('orders', 'Order\OrderController@index')->name('order.index');
+        Route::get('order/create', 'Order\OrderController@create')->name('order.create');
+        Route::post('order', 'Order\OrderController@store')->name('order.store');
     });
     /**
      * Ending Routes For Order\OrderController
