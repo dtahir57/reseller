@@ -42,6 +42,9 @@ class CreateOrdersTable extends Migration
             $table->string('shipping_state');
             $table->string('shipping_postcode');
             $table->string('shipping_country');
+            $table->integer('total_price');
+            $table->integer('discount')->nullable();
+            $table->integer('discounted_price')->nullable();
             $table->timestamps();
         });
     }

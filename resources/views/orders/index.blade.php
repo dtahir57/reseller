@@ -8,6 +8,12 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
+            @if(session('created'))
+                <li class="alert alert-success">{{ session('created') }}</li>
+            @endif
+            @if(session('deleted'))
+                <li class="alert alert-success">{{ session('deleted') }}</li>
+            @endif
             <div class="card">
                 <div class="card-body">
                     <h4>Manage Orders</h4>
@@ -25,8 +31,10 @@
                                   <th>#</th>
                                   <th>Order ID</th>
                                   <th>Customer Name</th>
-                                  <th>Customer Email</th>
-                                  <th>Actions</th>
+                                  <th>Total (Rs)</th>
+                                  <th>Discount (%)</th>
+                                  <th>Discounted Total (Rs)</th>
+                                  <th style="width: 200px;">Actions</th>
                               </tr>
                           </thead>
                           <tbody>
@@ -34,8 +42,26 @@
                               <tr>
                                   <td>{{ $loop->index + 1 }}</td>
                                   <td>{{ $order->id }}</td>
-                                  <td>{{ $order->billing_first_name }}</td>
-                                  <td>{{ $order->billing_email }}</td>
+                                  <td>{{ $order->customer_name }}</td>
+                                  <td>{{ $order->total_price }}</td>
+                                  <td>
+                                      @if ($order->discount)
+                                        {{ $order->discount }} %
+                                      @else
+                                        <p>N/A</p>
+                                      @endif
+                                  </td>
+                                  <td>
+                                      @if($order->discounted_price)
+                                        {{ $order->discounted_price }}
+                                      @else
+                                        <p>N/A</p>
+                                      @endif
+                                  </td>
+                                  <td>
+                                      <a href="" type="button" class="btn btn-info btn-sm">Edit</a>
+                                      <a href="{{ route('order.destroy', $order->id) }}" type="button" class="btn btn-danger btn-sm">Delete</a>
+                                  </td>
                               </tr>
                               @endforeach
                           </tbody>
