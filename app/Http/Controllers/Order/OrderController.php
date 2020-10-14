@@ -119,10 +119,28 @@ class OrderController extends Controller
         foreach($request->product_id as $item_id) {
             $product = Product::where('post_type', 'product')->where('ID', $item_id)->first();
             $order_item = new OrderItem;
-            $order_item->order_item_id = $item_id;
+            // $order_item->order_item_id = $item_id;
             $order_item->order_item_name = $product->post_title;
             $order_item->order_item_type = 'shipping';
             $order_item->order_id = $order->id;
+            $order_item->save();
+                $order_item_meta = new OrderItemMeta;
+                $order_item_meta->order_item_id = $order_item->id;
+                $order_item_meta->meta_key = '_product_id';
+                $order_item_meta->meta_value = $product->ID;
+                $order_item_meta->save();
+
+                $order_item_meta = new OrderItemMeta;
+                $order_item_meta->order_item_id = $order_item->id;
+                $order_item_meta->meta_key = '_line_subtotal';
+                $order_item_meta->meta_value = $request->total;
+                $order_item_meta->save();
+
+                $order_item_meta = new OrderItemMeta;
+                $order_item_meta->order_item_id = $order_item->id;
+                $order_item_meta->meta_key = '_line_total';
+                $order_item_meta->meta_value = $request->total;
+                $order_item_meta->save();
         }
         $post_meta = new PostMeta;
         $post_meta->post_id = $order->id;
