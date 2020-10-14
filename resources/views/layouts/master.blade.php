@@ -67,6 +67,7 @@
                        {{ (Request::is('order/create')?'active':'') }}">
                 <a href="{{ route('order.index') }}"><i class="fa fa-shopping-cart"></i> Orders</a>
             </li>
+            <li class="{{ (Request::is('discount/products')?'active':'') }}"><a href="{{ route('reseller.discount.products') }}"><i class="fa fa-percent"></i> Discount Products</a></li>
             @endif
         </ul>
       </nav>

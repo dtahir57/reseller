@@ -56,18 +56,26 @@ Route::group(['middleware' => 'auth'], function () {
      * Ending Routes For Super_User Role
      */
     Route::get('products', 'Product\ProductController@index')->name('product.index');
-    /**
-     * Starting Routes For Order\OrderController
-     */
+
     Route::group(['middleware' => 'role:Reseller'], function () {
+        /**
+         * Starting Routes For Order\OrderController
+         */
         Route::get('orders', 'Order\OrderController@index')->name('order.index');
         Route::get('order/create', 'Order\OrderController@create')->name('order.create');
         Route::post('order', 'Order\OrderController@store')->name('order.store');
         Route::post('search_products', 'Order\OrderController@search_products')->name('order.search_products');
         Route::post('get_product', 'Order\OrderController@get_product')->name('order.get_product');
         Route::get('order/destroy/{id}', 'Order\OrderController@destroy')->name('order.destroy');
+        /**
+         * Ending Routes For Order\OrderController
+         */
+        /**
+         * Starting Routes For Discount\DiscountController
+         */
+        Route::get('discount/products', 'Discount\DiscountController@index')->name('reseller.discount.products');
+        /**
+         * Ending Routes For Discount\DiscountController
+         */
     });
-    /**
-     * Ending Routes For Order\OrderController
-     */
 });

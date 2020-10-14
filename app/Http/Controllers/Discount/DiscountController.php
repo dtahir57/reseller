@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Discount;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\DiscountCode;
+use Auth;
 
 class DiscountController extends Controller
 {
@@ -14,7 +16,8 @@ class DiscountController extends Controller
      */
     public function index()
     {
-        //
+        $discounted_products = DiscountCode::where('reseller_id', Auth::user()->id)->latest()->get();
+        return view('discount_products.index', compact('discounted_products'));
     }
 
     /**
