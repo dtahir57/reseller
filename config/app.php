@@ -56,6 +56,10 @@ return [
 
     'asset_url' => env('ASSET_URL', null),
 
+    'consumer_key' => env('WC_CONSUMER_KEY'),
+
+    'consumer_secret' => env('WC_CONSUMER_SECRET'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Timezone

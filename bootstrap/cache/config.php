@@ -6,6 +6,8 @@
     'debug' => true,
     'url' => 'http://localhost',
     'asset_url' => NULL,
+    'consumer_key' => 'ck_9d8abd3e738f53316d56af50ff4f306bd4f85188',
+    'consumer_secret' => 'cs_fb2ff430448911bf669813770edab14cd00f1fd0',
     'timezone' => 'UTC',
     'locale' => 'en',
     'fallback_locale' => 'en',

@@ -16,6 +16,7 @@ use App\WordpressModels\OrderItem;
 use App\WordpressModels\OrderItemMeta;
 use App\WordpressModels\PostMeta;
 use Carbon\Carbon;
+use App\woocommerce\src\WooCommerce\Client;
 
 class OrderController extends Controller
 {
@@ -27,6 +28,17 @@ class OrderController extends Controller
     public function index()
     {
         $orders = DB::table('orders')->where('user_id', Auth::user()->id)->paginate(15);
+        $woocommerce = new Client(
+            'https://rang-reza.com.pk/',
+            config('app.consumer_key'),
+            config('app.consumer_secret'),
+            [
+                'wp_api' => true,
+                'version' => 'wc/v3',
+                'query_string_auth' => true,
+                'verify_ssl' => false
+            ]
+        );
         return view('orders.index', compact('orders'));
     }
 
@@ -92,199 +104,58 @@ class OrderController extends Controller
 
     public function store_wordpress_order(Request $request)
     {
-        $order = new Product;
-        $order->post_author = 1;
-        $order->post_date = Carbon::now();
-        $order->post_date_gmt = Carbon::now();
-        $order->post_content = ' ';
-        $order->post_title = 'Order From Reseller '. Auth::user()->name;
-        $order->post_excerpt = 'Order From Reseller '. Auth::user()->name;
-        $order->post_status = 'shipping-by-blue-ex';
-        $order->comment_status = 'open';
-        $order->ping_status = 'closed';
-        $order->post_password = 'wc_order'.$this->generateRandomString(20);
-        $order->post_name = 'order-from-dashboard-'.Carbon::now();
-        $order->to_ping = ' ';
-        $order->pinged = ' ';
-        $order->post_content_filtered = ' ';
-        $order->post_modified = Carbon::now();
-        $order->post_modified_gmt = Carbon::now();
-        $order->post_parent = 0;
-        $order->guid = 'https://rang-reza.com.pk';
-        $order->menu_order = 0;
-        $order->post_type = 'shop_order';
-        $order->post_mime_type = ' ';
-        $order->comment_count = 0;
-        $order->save();
-        foreach($request->product_id as $item_id) {
-            $product = Product::where('post_type', 'product')->where('ID', $item_id)->first();
-            $order_item = new OrderItem;
-            // $order_item->order_item_id = $item_id;
-            $order_item->order_item_name = $product->post_title;
-            $order_item->order_item_type = 'shipping';
-            $order_item->order_id = $order->id;
-            $order_item->save();
-                $order_item_meta = new OrderItemMeta;
-                $order_item_meta->order_item_id = $order_item->id;
-                $order_item_meta->meta_key = '_product_id';
-                $order_item_meta->meta_value = $product->ID;
-                $order_item_meta->save();
-
-                $order_item_meta = new OrderItemMeta;
-                $order_item_meta->order_item_id = $order_item->id;
-                $order_item_meta->meta_key = '_line_subtotal';
-                $order_item_meta->meta_value = $request->total;
-                $order_item_meta->save();
-
-                $order_item_meta = new OrderItemMeta;
-                $order_item_meta->order_item_id = $order_item->id;
-                $order_item_meta->meta_key = '_line_total';
-                $order_item_meta->meta_value = $request->total;
-                $order_item_meta->save();
+        $line_items = [];
+        foreach($request->product_id as $product) {
+            $line_items['product_id'] = $product;
+            $line_items['quantity'] = 1;
         }
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_billing_first_name';
-        $post_meta->meta_value = $request->billing_first_name;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_billing_last_name';
-        $post_meta->meta_value = $request->billing_last_name;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_billing_company';
-        $post_meta->meta_value = $request->billing_company;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_billing_address_1';
-        $post_meta->meta_value = $request->billing_address_1;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_billing_address_2';
-        $post_meta->meta_value = $request->billing_address_2;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_billing_city';
-        $post_meta->meta_value = $request->billing_city;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_billing_first_name';
-        $post_meta->meta_value = $request->billing_first_name;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_billing_state';
-        $post_meta->meta_value = $request->billing_state;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_billing_postcode';
-        $post_meta->meta_value = $request->billing_postcode;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_billing_country';
-        $post_meta->meta_value = $request->billing_country;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_billing_email';
-        $post_meta->meta_value = $request->billing_email;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_billing_phone';
-        $post_meta->meta_value = $request->billing_phone;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_customer_user';
-        $post_meta->meta_value = 0;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_shipping_first_name';
-        $post_meta->meta_value = $request->shipping_first_name;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_shipping_last_name';
-        $post_meta->meta_value = $request->shipping_last_name;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_shipping_company';
-        $post_meta->meta_value = $request->shipping_company;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_shipping_address_1';
-        $post_meta->meta_value = $request->shipping_address_1;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_shipping_address_2';
-        $post_meta->meta_value = $request->shipping_address_2;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_shipping_city';
-        $post_meta->meta_value = $request->shipping_city;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_shipping_state';
-        $post_meta->meta_value = $request->shipping_state;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_shipping_postcode';
-        $post_meta->meta_value = $request->shipping_postcode;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_shipping_country';
-        $post_meta->meta_value = $request->shipping_country;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_shipping_email';
-        $post_meta->meta_value = $request->shipping_email;
-        $post_meta->save();
-
-        $post_meta = new PostMeta;
-        $post_meta->post_id = $order->id;
-        $post_meta->meta_key = '_shipping_phone';
-        $post_meta->meta_value = $request->shipping_phone;
-        $post_meta->save();
+        $data = [
+            'payment_method' => 'cod',
+            'payment_method_title' => 'Cash On Delivery',
+            'set_paid' => false,
+            'billing' => [
+                'first_name' => $request->billing_first_name,
+                'last_name' => $request->billing_last_name,
+                'address_1' => $request->billing_address_1,
+                'address_2' => $request->billing_address_2,
+                'city' => $request->billing_city,
+                'state' => $request->billing_state,
+                'postcode' => $request->billing_postcode,
+                'country' => $request->billing_country,
+                'email' => $request->billing_email,
+                'phone' => $request->billing_phone
+            ],
+            'shipping' => [
+                'first_name' => $request->shipping_first_name,
+                'last_name' => $request->shipping_last_name,
+                'address_1' => $request->shipping_address_1,
+                'address_2' => $request->shipping_address_2,
+                'city' => $request->shipping_city,
+                'state' => $request->shipping_state,
+                'postcode' => $request->shipping_postcode,
+                'country' => $request->shipping_country
+            ],
+            'line_items' => [$line_items],
+            'shipping_lines' => [
+                [
+                    'method_id' => 'flat_rate',
+                    'method_title' => 'Flat Rate',
+                    'total' => "'(int) $request->total'"
+                ]
+            ]
+        ];
+        $woocommerce = new Client(
+            'https://rang-reza.com.pk/',
+            config('app.consumer_key'),
+            config('app.consumer_secret'),
+            [
+                'wp_api' => true,
+                'version' => 'wc/v3',
+                'query_string_auth' => true,
+                'verify_ssl' => false
+            ]
+        );
+        print_r($woocommerce->post('orders', $data));
     }
 
     public function generateRandomString($length) {
@@ -386,7 +257,7 @@ class OrderController extends Controller
                         </div>
                    </div>
                    <a href="javascript:void(0)" onclick="search_product_again('.$request->divId.')">Click here to search product again</a>';
-        
+
         $data = array('final' => $output, 'id' => $product->ID, 'price' => $price);
 
         return json_encode($data);
