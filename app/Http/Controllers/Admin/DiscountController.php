@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DiscountCode;
 use DB;
-use App\Product;
+use App\WordpressModels\Product;
 use App\User;
 use App\Http\Requests\DiscountRequest;
 use Session;

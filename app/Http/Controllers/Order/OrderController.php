@@ -258,7 +258,7 @@ class OrderController extends Controller
                    </div>
                    <a href="javascript:void(0)" onclick="search_product_again('.$request->divId.')">Click here to search product again</a>';
 
-        $data = array('final' => $output, 'id' => $product->ID, 'price' => $price);
+        $data = array('final' => $output, 'id' => $product->ID, 'price' => (int) $price);
 
         return json_encode($data);
     }
@@ -268,10 +268,11 @@ class OrderController extends Controller
         $discounted_products = DiscountCode::where('reseller_id', Auth::user()->id)->pluck('product_id')->toArray();
         $price = DB::connection('mysql2')->table('wpjo_postmeta')->where('post_id', $product->ID)->where('meta_key', '_price')->first();
         if (in_array($product->ID, $discounted_products)) {
-            $percentage = $product->discount;
+            $discount = DiscountCode::where('reseller_id', Auth::user()->id)->where('product_id', $product->ID)->first();
+            $percentage = (int) $discount->discount;
             $total_price = (int) $price->meta_value;
             $calculate = ($percentage / 100) * $total_price;
-            return $calculate;
+            return $total_price - $calculate;
         } else {
             return (int) $price->meta_value;
         }

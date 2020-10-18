@@ -47,7 +47,7 @@
                               <td>{{ $user->name }}</td>
                               <td>{{ $user->email }}</td>
                               <td>
-                                  <a href="{{ route('admin.reseller.destroy', $user->id) }}" role="button" class="btn btn-danger">Delete</a>
+                                  <a href="{{ route('admin.reseller.destroy', $user->id) }}" role="button" class="btn btn-danger btn-sm">Delete</a>
                               </td>
                           </tr>
                           @endforeach

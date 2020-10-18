@@ -35,7 +35,7 @@
                                     <th>Product</th>
                                     <th>Reseller</th>
                                     <th>Discount</th>
-                                    <th>Actions</th>
+                                    <th style="width: 200px;">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>

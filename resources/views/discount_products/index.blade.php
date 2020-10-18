@@ -22,12 +22,12 @@
                             <tbody>
                                 @foreach($discounted_products as $d)
                                     @php
-                                        $product = DB::connection('mysql2')->table('wpjo_posts')->where('post_type', 'product')->first();
+                                        $product = DB::connection('mysql2')->table('wpjo_posts')->where('post_type', 'product')->where('id', $d->product_id)->first();
                                     @endphp
                                     <tr>
                                         <td>{{ $loop->index + 1 }}</td>
                                         <td>{{ $product->post_title }}</td>
-                                        <td>{{ $d->discount }}</td>
+                                        <td>{{ $d->discount }}%</td>
                                     </tr>
                                 @endforeach
                             </tbody>
