@@ -17,6 +17,7 @@ use App\WordpressModels\OrderItemMeta;
 use App\WordpressModels\PostMeta;
 use Carbon\Carbon;
 use App\woocommerce\src\WooCommerce\Client;
+use App\Models\Earning;
 
 class OrderController extends Controller
 {
@@ -60,6 +61,10 @@ class OrderController extends Controller
      */
     public function store(OrderRequest $request)
     {
+        $actual_earning = array_sum($request->actual_price);
+        $calculate = null;
+        $order_total = (int) $request->total;
+        // Create New Order
         $order = new Order;
         $order->user_id = Auth::user()->id;
         $order->billing_first_name = $request->billing_first_name;
@@ -97,7 +102,20 @@ class OrderController extends Controller
             $order_has_product->order_id = $order->id;
             $order_has_product->save();
         }
-        $this->store_wordpress_order($request);
+        // $this->store_wordpress_order($request);
+        $earning = new Earning;
+        $earning->reseller_id = Auth::user()->id;
+        $earning->order_id = $order->id;
+        $earning->order_total = $order_total;
+        $earning->actual_earning = $actual_earning;
+        if ($discounted_total) {
+            $earning->discounted_total = $order->discounted_price;
+            $earning->actual_profit = $actual_earning - $order_total - $calculate;
+        } else {
+            $earning->actual_profit = $actual_earning - $order_total;
+        }
+        $earning->save();
+        
         Session::flash('created', 'New Order Created Successfully!');
         return redirect()->route('order.index');
     }
@@ -105,9 +123,9 @@ class OrderController extends Controller
     public function store_wordpress_order(Request $request)
     {
         $line_items = [];
-        foreach($request->product_id as $product) {
-            $line_items['product_id'] = $product;
-            $line_items['quantity'] = 1;
+        for($i = 0; $i < count($request->product_id); $i++) {
+            $line_items[$i]['product_id'] = $request->product_id[$i];
+            $line_items[$i]['quantity'] = 1;
         }
         $data = [
             'payment_method' => 'cod',
@@ -135,7 +153,7 @@ class OrderController extends Controller
                 'postcode' => $request->shipping_postcode,
                 'country' => $request->shipping_country
             ],
-            'line_items' => [$line_items],
+            'line_items' => $line_items,
             'shipping_lines' => [
                 [
                     'method_id' => 'flat_rate',
@@ -246,6 +264,8 @@ class OrderController extends Controller
     public function get_product(Request $request)
     {
         $product = Product::where('post_type', 'product')->where('ID', $request->id)->first();
+        $postmeta = DB::connection('mysql2')->table('wpjo_postmeta')->where('post_id', $product->ID)->where('meta_key', '_price')->first();
+        $actual_price = (int) $postmeta->meta_value;
         $price = $this->calculate_price($product);
         $output = '<div class="card">
                         <div class="card-body">
@@ -258,7 +278,7 @@ class OrderController extends Controller
                    </div>
                    <a href="javascript:void(0)" onclick="search_product_again('.$request->divId.')">Click here to search product again</a>';
 
-        $data = array('final' => $output, 'id' => $product->ID, 'price' => (int) $price);
+        $data = array('final' => $output, 'id' => $product->ID, 'price' => (int) $price, 'actual_price' => $actual_price);
 
         return json_encode($data);
     }

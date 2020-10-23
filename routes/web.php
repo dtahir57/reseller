@@ -77,5 +77,12 @@ Route::group(['middleware' => 'auth'], function () {
         /**
          * Ending Routes For Discount\DiscountController
          */
+        /**
+         * Starting Routes For Earning\EarningController
+         */
+        Route::get('earnings', 'Earning\EarningController@index')->name('earning.index');
+        /**
+         * Ending Routes For Earning\EarningController
+         */
     });
 });

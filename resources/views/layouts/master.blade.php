@@ -59,8 +59,10 @@
             <li class="{{ (Request::is('admin/resellers')?'active':'') }}
             {{ (Request::is('admin/reseller/create')?'active':'') }}"><a href="{{ route('admin.reseller.index') }}"><i class="fa fa-users"></i> Resellers</a></li>
             <li class="{{ (Request::is('admin/discounts')?'active':'') }}
-            {{ (Request::is('admin/discount/create')?'active':'') }}
-            {{ (Request::is('admin/discount/'.request()->route('id').'/edit')?'active':'') }}"><a href="{{ route('admin.discount.index') }}"><i class="fa fa-percent"></i> Discounts</a></li>
+              {{ (Request::is('admin/discount/create')?'active':'') }}
+              {{ (Request::is('admin/discount/'.request()->route('id').'/edit')?'active':'') }}"><a href="{{ route('admin.discount.index') }}"><i class="fa fa-percent"></i> Discounts</a>
+            </li>
+            <li class=""><a href=""><i class="fa fa-money"></i> Pay</a></li>
             @endif
             @if(Auth::user()->hasRole('Reseller'))
             <li class="{{ (Request::is('orders')?'active':'') }}
@@ -68,6 +70,7 @@
                 <a href="{{ route('order.index') }}"><i class="fa fa-shopping-cart"></i> Orders</a>
             </li>
             <li class="{{ (Request::is('discount/products')?'active':'') }}"><a href="{{ route('reseller.discount.products') }}"><i class="fa fa-percent"></i> Discount Products</a></li>
+            <li class="{{ (Request::is('earnings')?'active':'') }}"><a href="{{ route('earning.index') }}"><i class="fa fa-money"></i> Earnings</a></li>
             @endif
         </ul>
       </nav>

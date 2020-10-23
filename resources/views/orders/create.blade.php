@@ -83,6 +83,7 @@
                                                     <div id="productView1"></div>
                                                     <input type="hidden" name="product_id[]" id="product_id_1" />
                                                     <input type="hidden" name="product_price[]" id="product_price_1" />
+                                                    <input type="hidden" name="actual_price[]" id="actual_price_1" />
                                                 </td>
                                                 <td>
                                                     <button type="button" class="btn btn-success" id="addMore"><i class="fa fa-plus"></i> Add</button>
@@ -232,6 +233,7 @@
                 $('#productView'+divId).show();
                 $('#product_id_'+divId).val(data.id);
                 $('#product_price_'+divId).val(data.price);
+                $('#actual_price_'+divId).val(data.actual_price);
                 calculate_price(data.price);
             }
         });
@@ -268,7 +270,7 @@
         var i = 1;
         $('#addMore').click(function () {
             i++;
-            $('#dynamicField').append('<tr id="row'+i+'"><td><div id="product-search-'+i+'"><input type="text" class="form-control" placeholder="Product Title" name="products[]" id="product'+i+'" onkeyup="search_products('+i+')" /><div id="products-'+i+'"></div></div><div id="productView'+i+'"></div><input type="hidden" name="product_id[]" id="product_id_'+i+'" /><input type="hidden" name="product_price[]" id="product_price_'+i+'" /></td><td><button type="button" class="btn btn-danger btn-remove" id="'+i+'">X</button></td></tr>');
+            $('#dynamicField').append('<tr id="row'+i+'"><td><div id="product-search-'+i+'"><input type="text" class="form-control" placeholder="Product Title" name="products[]" id="product'+i+'" onkeyup="search_products('+i+')" /><div id="products-'+i+'"></div></div><div id="productView'+i+'"></div><input type="hidden" name="product_id[]" id="product_id_'+i+'" /><input type="hidden" name="product_price[]" id="product_price_'+i+'" /><input type="hidden" name="actual_price[]" id="actual_price_'+i+'" /></td><td><button type="button" class="btn btn-danger btn-remove" id="'+i+'">X</button></td></tr>');
         });
         $(document).on('click', '.btn-remove', function () {
             var button_id = $(this).attr("id");
