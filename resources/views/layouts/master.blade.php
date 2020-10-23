@@ -62,7 +62,7 @@
               {{ (Request::is('admin/discount/create')?'active':'') }}
               {{ (Request::is('admin/discount/'.request()->route('id').'/edit')?'active':'') }}"><a href="{{ route('admin.discount.index') }}"><i class="fa fa-percent"></i> Discounts</a>
             </li>
-            <li class=""><a href=""><i class="fa fa-money"></i> Pay</a></li>
+            <li class="{{ (Request::is('admin/earnings')?'active':'') }}"><a href="{{ route('admin.earnings.index') }}"><i class="fa fa-money"></i> Pay</a></li>
             @endif
             @if(Auth::user()->hasRole('Reseller'))
             <li class="{{ (Request::is('orders')?'active':'') }}

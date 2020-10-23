@@ -8,6 +8,9 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
+            @if(session('screenshot_uploaded'))
+                <li class="alert alert-success">{{ session('screenshot_uploaded') }}</li>
+            @endif
             <div class="card">
                 <div class="card-body">
                     <div class="table-responsive">
@@ -17,26 +20,29 @@
                                     <th>#</th>
                                     <th>Order ID</th>
                                     <th>Screenshot</th>
+                                    <th>User</th>
                                     <th>Total Order Price</th>
                                     <th>Admin Actual Price</th>
                                     <th>Discounted Price</th>
                                     <th>Amount To Be Paid (Actual Profit)</th>
                                     <th>Status</th>
-                                    @if($check === 1)
                                     <th>Action</th>
-                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($earnings as $earning)
+                                @php
+                                    $user = App\User::find($earning->reseller_id);
+                                @endphp
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
-                                    <td>{{ $earning->order_id }}</td>
+                                    <td>{{ $earning->order_id }} Rs</td>
                                     @if($earning->screenshot_url)
                                     <td><img src="{{ Storage::url($earning->screenshot_url) }}" alt="Screenshot" width="100" /></td>
                                     @else
                                     <td><span class="text-info">NOT UPLOADED</span></td>
                                     @endif
+                                    <td>{{ $user->email }}</td>
                                     <td>{{ $earning->order_total }} Rs</td>
                                     <td>{{ $earning->actual_earning }} Rs</td>
                                     <td>
@@ -56,12 +62,15 @@
                                         <span class="text-success">PAID</span>
                                         @endif
                                     </td>
-                                    @if($check === 1)
                                     <td>
-                                        <a href="" role="button" class="btn btn-info">Review On Facebook</a>
+                                        @if($earning->screenshot_url)
+                                            <p class="text-muted">UPLOADED</p>
+                                        @else
+                                        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#fileModal-{{ $earning->id }}">Attach File</button>
+                                        @endif
                                     </td>
-                                    @endif
                                 </tr>
+                                @include('admin.earning.file_modal')
                                 @endforeach
                             </tbody>
                             <tfoot>

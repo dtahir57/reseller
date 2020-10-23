@@ -51,6 +51,14 @@ Route::group(['middleware' => 'auth'], function () {
         /**
          * Ending Routes For DiscountController
          */
+        /**
+         * Starting Routes For Admin\EarningController
+         */
+        Route::get('earnings', 'Admin\EarningController@index')->name('admin.earnings.index');
+        Route::post('earning/screenshot/{id}', 'Admin\EarningController@store')->name('admin.earning.store');
+        /**
+         * Ending Routes For Admin\EarningController
+         */
     });
     /**
      * Ending Routes For Super_User Role

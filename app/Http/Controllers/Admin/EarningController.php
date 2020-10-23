@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\Earning;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Earning;
 use DB;
-use Auth;
+use App\Models\Earning;
+use Session;
 
 class EarningController extends Controller
 {
@@ -17,10 +17,8 @@ class EarningController extends Controller
      */
     public function index()
     {
-        $earnings = DB::table('earnings')->where('reseller_id', Auth::user()->id)->paginate(10);
-        $check = Earning::where('reseller_id', Auth::user()->id)->where('status', 'paid')->get()->count();
-        // dd($check);
-        return view('earning.index', compact('earnings', 'check'));
+        $earnings = DB::table('earnings')->orderBy('id', 'DESC')->paginate(10);
+        return view('admin.earning.index', compact('earnings'));
     }
 
     /**
@@ -39,9 +37,14 @@ class EarningController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        //
+        $earning = Earning::find($id);
+        $earning->screenshot_url = $request->screenshot->store('public/screenshots');
+        $earning->status = 'paid';
+        $earning->update();
+        Session::flash('screenshot_uploaded', 'Screenshot Uploaded Successfully!');
+        return redirect()->route('admin.earnings.index');
     }
 
     /**
