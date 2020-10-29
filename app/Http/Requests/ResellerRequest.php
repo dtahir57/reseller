@@ -23,12 +23,24 @@ class ResellerRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users',
-            'number' => 'required|string|max:13',
-            'city' => 'required|string',
-            'password' => 'required|string|confirmed'
-        ];
+        switch($this->method()) {
+            case 'GET':
+            case 'DELETE':
+                return [];
+            case 'POST':
+                return [
+                    'name' => 'required|string|max:255',
+                    'email' => 'required|string|email|unique:users',
+                    'number' => 'required|string|max:13',
+                    'city' => 'required|string',
+                    'password' => 'required|string|confirmed'
+                ];
+            case 'PATCH':
+                return [
+                    'name' => 'required|string|max:255'
+                ];
+            case 'DEFAULT':
+                return [];       
+        }
     }
 }

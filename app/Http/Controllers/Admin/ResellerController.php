@@ -72,7 +72,8 @@ class ResellerController extends Controller
      */
     public function edit($id)
     {
-        //
+        $reseller = User::find($id);
+        return view('admin.resellers.edit', compact('reseller'));
     }
 
     /**
@@ -82,9 +83,30 @@ class ResellerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ResellerRequest $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->discount = $request->discount;
+        $user->update();
+        Session::flash('updated', 'Reseller Details Updated Successfully!');
+        return redirect()->route('admin.reseller.index');
+    }
+
+    public function create_discount()
+    {
+        return view('admin.resellers.discount');
+    }
+
+    public function reseller_discount(Request $request)
+    {
+        $users = User::role('Reseller')->get();
+        foreach($users as $user) {
+            $user->discount = $request->discount;
+            $user->update();
+        }
+        Session::flash('discount_added', 'Discount Added To All Resellers');
+        return redirect()->route('admin.reseller.index');
     }
 
     /**

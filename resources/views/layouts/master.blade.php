@@ -57,7 +57,10 @@
             <li class="{{ (Request::is('products')?'active':'') }}"><a href="{{ route('product.index') }}"><i class="fa fa-product-hunt"></i> Products</a></li>
             @if (Auth::user()->hasRole('Super_User'))
             <li class="{{ (Request::is('admin/resellers')?'active':'') }}
-            {{ (Request::is('admin/reseller/create')?'active':'') }}"><a href="{{ route('admin.reseller.index') }}"><i class="fa fa-users"></i> Resellers</a></li>
+            {{ (Request::is('admin/reseller/create')?'active':'') }}
+            {{ (Request::is('admin/reseller/'.request()->route('id').'/edit')?'active':'') }}
+            {{ (Request::is('admin/reseller/discount')?'active':'') }}">
+            <a href="{{ route('admin.reseller.index') }}"><i class="fa fa-users"></i> Resellers</a></li>
             <li class="{{ (Request::is('admin/discounts')?'active':'') }}
               {{ (Request::is('admin/discount/create')?'active':'') }}
               {{ (Request::is('admin/discount/'.request()->route('id').'/edit')?'active':'') }}"><a href="{{ route('admin.discount.index') }}"><i class="fa fa-percent"></i> Discounts</a>
