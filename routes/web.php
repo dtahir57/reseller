@@ -97,4 +97,16 @@ Route::group(['middleware' => 'auth'], function () {
          * Ending Routes For Earning\EarningController
          */
     });
+    /**
+     * Starting Routes For Bank\BankDetailsController
+     */
+    Route::get('bank_details', 'Bank\BankDetailsController@index')->name('bank_detail.index');
+    Route::get('bank_detail/create', 'Bank\BankDetailsController@create')->name('bank_detail.create');
+    Route::post('bank_details', 'Bank\BankDetailsController@store')->name('bank_detail.store');
+    Route::get('bank_detail/{id}/edit', 'Bank\BankDetailsController@edit')->name('bank_detail.edit');
+    Route::patch('bank_detail/{id}', 'Bank\BankDetailsController@update')->name('bank_detail.update');
+    Route::get('bank_detail/destroy/{id}', 'Bank\BankDetailsController@destroy')->name('bank_detail.destroy');
+    /**
+     * Ending Routes For Bank\BankDetailsController
+     */
 });

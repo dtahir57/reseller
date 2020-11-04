@@ -75,6 +75,11 @@
             <li class="{{ (Request::is('discount/products')?'active':'') }}"><a href="{{ route('reseller.discount.products') }}"><i class="fa fa-percent"></i> Discount Products</a></li>
             <li class="{{ (Request::is('earnings')?'active':'') }}"><a href="{{ route('earning.index') }}"><i class="fa fa-money"></i> Earnings</a></li>
             @endif
+            <li class="{{ (Request::is('bank_details')?'active':'') }}
+                       {{ (Request::is('bank_detail/create')?'active':'') }}
+                       {{ (Request::is('bank_detail/'.request()->route('id').'/edit')?'active':'') }}">
+              <a href="{{ route('bank_detail.index') }}"><i class="fa fa-bank"></i> Bank Details</a>
+            </li>
         </ul>
       </nav>
       <!-- Sidebar Navigation end-->
