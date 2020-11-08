@@ -18,6 +18,8 @@ use App\WordpressModels\PostMeta;
 use Carbon\Carbon;
 use App\woocommerce\src\WooCommerce\Client;
 use App\Models\Earning;
+use App\Http\Requests\OrdersRequest;
+use Rap2hpoutre\FastExcel\FastExcel;
 
 class OrderController extends Controller
 {
@@ -28,7 +30,12 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = DB::table('orders')->where('user_id', Auth::user()->id)->paginate(15);
+        $orders = [];
+        if (Auth::user()->hasRole('Super_User')) {
+            $orders = DB::table('orders')->paginate(15);
+        } else {
+            $orders = DB::table('orders')->where('user_id', Auth::user()->id)->paginate(15);
+        }
         $woocommerce = new Client(
             'https://rang-reza.com.pk/',
             config('app.consumer_key'),
@@ -102,13 +109,17 @@ class OrderController extends Controller
             $order_has_product->order_id = $order->id;
             $order_has_product->save();
         }
-        // $this->store_wordpress_order($request);
+        $w_order = $this->store_wordpress_order($request);
+        // dd($w_order->id);
+        $s_order = Order::find($order->id);
+        $s_order->order_id = $w_order->id;
+        $s_order->update();
         $earning = new Earning;
         $earning->reseller_id = Auth::user()->id;
         $earning->order_id = $order->id;
         $earning->order_total = $order_total;
         $earning->actual_earning = $actual_earning;
-        if ($discounted_total) {
+        if ($calculate) {
             $earning->discounted_total = $order->discounted_price;
             $earning->actual_profit = $actual_earning - $order_total - $calculate;
         } else {
@@ -173,7 +184,8 @@ class OrderController extends Controller
                 'verify_ssl' => false
             ]
         );
-        print_r($woocommerce->post('orders', $data));
+        $order = $woocommerce->post('orders', $data);
+        return $order;
     }
 
     public function generateRandomString($length) {
@@ -296,5 +308,39 @@ class OrderController extends Controller
         } else {
             return (int) $price->meta_value;
         }
+    }
+
+    public function delivered_orders(OrdersRequest $request)
+    {
+        $path = $request->file('orders')->getRealPath();
+        $collection = (new FastExcel)->import($path);
+        foreach($collection as $key => $val) {
+            $order = Order::where('order_id', $val['Order ID'])->first();
+            if ($order) {
+                $order->status = 'delivered';
+                $order->update();
+            } else {
+            break;
+            }
+        }
+        Session::flash('uploaded', 'Delivered Orders Upload!');
+        return redirect()->route('order.index');
+    }
+
+    public function returned_orders(OrdersRequest $request)
+    {
+        $path = $request->file('orders')->getRealPath();
+        $collection = (new FastExcel)->import($path);
+        foreach($collection as $key => $val) {
+            $order = Order::where('order_id', $val['Order ID'])->first();
+            if ($order) {
+                $order->status = 'returned';
+                $order->update();
+            } else {
+            break;
+            }
+        }
+        Session::flash('uploaded', 'Returned Orders Upload!');
+        return redirect()->route('order.index');
     }
 }

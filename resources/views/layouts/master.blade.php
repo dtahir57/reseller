@@ -67,11 +67,11 @@
             </li>
             <li class="{{ (Request::is('admin/earnings')?'active':'') }}"><a href="{{ route('admin.earnings.index') }}"><i class="fa fa-money"></i> Pay</a></li>
             @endif
-            @if(Auth::user()->hasRole('Reseller'))
             <li class="{{ (Request::is('orders')?'active':'') }}
                        {{ (Request::is('order/create')?'active':'') }}">
                 <a href="{{ route('order.index') }}"><i class="fa fa-shopping-cart"></i> Orders</a>
             </li>
+            @if(Auth::user()->hasRole('Reseller'))
             <li class="{{ (Request::is('discount/products')?'active':'') }}"><a href="{{ route('reseller.discount.products') }}"><i class="fa fa-percent"></i> Discount Products</a></li>
             <li class="{{ (Request::is('earnings')?'active':'') }}"><a href="{{ route('earning.index') }}"><i class="fa fa-money"></i> Earnings</a></li>
             @endif

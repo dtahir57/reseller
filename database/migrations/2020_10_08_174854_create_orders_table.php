@@ -21,6 +21,7 @@ class CreateOrdersTable extends Migration
                     ->on('users')
                     ->onDelete('cascade')
                     ->onUpdate('cascade');
+            $table->integer('order_id')->unsigned()->nullable();
             $table->string('billing_first_name');
             $table->string('billing_last_name');
             $table->string('billing_company');
@@ -45,6 +46,7 @@ class CreateOrdersTable extends Migration
             $table->integer('total_price');
             $table->integer('discount')->nullable();
             $table->integer('discounted_price')->nullable();
+            $table->string('status')->default('processing')->nullable();
             $table->timestamps();
         });
     }

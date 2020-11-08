@@ -11,13 +11,23 @@
             @if(session('created'))
                 <li class="alert alert-success">{{ session('created') }}</li>
             @endif
+            @if(session('uploaded'))
+                <li class="alert alert-success">{{ session('uploaded') }}</li>
+            @endif
             @if(session('deleted'))
                 <li class="alert alert-success">{{ session('deleted') }}</li>
             @endif
+            @foreach($errors->all() as $error)
+                <li class="alert alert-danger">{{ $error }}</li>
+            @endforeach
             <div class="card">
                 <div class="card-body">
                     <h4>Manage Orders</h4>
-                    <a href="{{ route('order.create') }}" role="button" class="btn btn-success float-right"><i class="fa fa-plus"></i> Create New</a>
+                    @if(Auth::user()->hasRole('Super_User'))
+                    <button type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#deliveredOrderModal"><i class="fa fa-file"></i> Upload Deliver Orders</button>
+                    <button type="button" class="btn btn-danger float-right mr-2" data-toggle="modal" data-target="#returnedOrderModal"><i class="fa fa-file"></i> Upload Retured Orders</button>
+                    @endif
+                    <a href="{{ route('order.create') }}" role="button" class="btn btn-success float-right mr-2"><i class="fa fa-plus"></i> Create New</a>
                 </div>
             </div>
         </div>
@@ -34,6 +44,7 @@
                                   <th>Total (Rs)</th>
                                   <th>Discount (%)</th>
                                   <th>Discounted Total (Rs)</th>
+                                  <th>Status</th>
                                   <th style="width: 200px;">Actions</th>
                               </tr>
                           </thead>
@@ -59,6 +70,9 @@
                                       @endif
                                   </td>
                                   <td>
+                                      <p class="text-info" style="text-transform:uppercase;">{{ $order->status }}</p>
+                                  </td>
+                                  <td>
                                       <a href="" type="button" class="btn btn-info btn-sm">Edit</a>
                                       <a href="{{ route('order.destroy', $order->id) }}" type="button" class="btn btn-danger btn-sm">Delete</a>
                                   </td>
@@ -73,4 +87,6 @@
         </div>
     </div>
 </div>
+@include('orders.partials.deliver_order_modal')
+@include('orders.partials.returned_order_modal')
 @endsection
