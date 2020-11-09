@@ -20,6 +20,7 @@ use App\woocommerce\src\WooCommerce\Client;
 use App\Models\Earning;
 use App\Http\Requests\OrdersRequest;
 use Rap2hpoutre\FastExcel\FastExcel;
+use App\User;
 
 class OrderController extends Controller
 {
@@ -71,6 +72,7 @@ class OrderController extends Controller
         $actual_earning = array_sum($request->actual_price);
         $calculate = null;
         $order_total = (int) $request->total;
+        $reseller_discount = Auth::user()->discount;
         // Create New Order
         $order = new Order;
         $order->user_id = Auth::user()->id;
@@ -120,12 +122,27 @@ class OrderController extends Controller
         $earning->order_total = $order_total;
         $earning->actual_earning = $actual_earning;
         if ($calculate) {
+            $u_cal = 0;
+            if (Auth::user()->discount) {
+                $u_cal = ((int) Auth::user()->discount / 100) * $discounted_total;
+                $u_total = $discounted_total - $u_cal;
+            }
             $earning->discounted_total = $order->discounted_price;
-            $earning->actual_profit = $actual_earning - $order_total - $calculate;
+            $earning->actual_profit = $actual_earning - $order_total - $calculate - $u_cal;
         } else {
-            $earning->actual_profit = $actual_earning - $order_total;
+            $u_cal = 0;
+            if (Auth::user()->discount) {
+                $u_cal = ((int) Auth::user()->discount / 100) * $order_total;
+                $u_total = $order_total - $u_cal;
+            }
+            $earning->actual_profit = $actual_earning - $order_total - $u_cal;
         }
         $earning->save();
+
+        $u_earning = Earning::find($earning->id);
+        $reseller = User::find(Auth::user()->id);
+        $reseller->balance = $reseller->balance + $u_earning->actual_profit;
+        $reseller->update();
         
         Session::flash('created', 'New Order Created Successfully!');
         return redirect()->route('order.index');

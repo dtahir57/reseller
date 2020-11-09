@@ -122,4 +122,13 @@ class ResellerController extends Controller
         Session::flash('deleted', 'User Deleted Successfully!');
         return redirect()->route('admin.reseller.index');
     }
+
+    public function weekly_deduction()
+    {
+        $users = User::role('Reseller')->get();
+        foreach($users as $user) {
+            $user->balance = $user->balance - 250;
+            $user->update();
+        }
+    }
 }

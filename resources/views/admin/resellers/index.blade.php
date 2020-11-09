@@ -41,7 +41,7 @@
                           Email
                         </th>
                         <th>Discount %</th>
-                        <th style="width: 200px;">
+                        <th style="width: 300px;">
                           Actions
                         </th>
                       </thead>
@@ -55,8 +55,10 @@
                               <td>
                                   <a href="{{ route('admin.reseller.edit', $user->id) }}" role="button" class="btn btn-primary btn-sm">Edit</a>
                                   <a href="{{ route('admin.reseller.destroy', $user->id) }}" role="button" class="btn btn-danger btn-sm">Delete</a>
+                                  <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#bank_details-{{ $user->id }}">Bank Details</button>
                               </td>
                           </tr>
+                          @include('admin.resellers.partials.bank_details_modal')
                           @endforeach
                       </tbody>
                     </table>
