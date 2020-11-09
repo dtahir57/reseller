@@ -41,6 +41,7 @@
                           Email
                         </th>
                         <th>Discount %</th>
+                        <th>Balance</th>
                         <th style="width: 300px;">
                           Actions
                         </th>
@@ -52,6 +53,7 @@
                               <td>{{ $user->name }}</td>
                               <td>{{ $user->email }}</td>
                               <td>{{ $user->discount }}</td>
+                              <td>{{ $user->balance }}</td>
                               <td>
                                   <a href="{{ route('admin.reseller.edit', $user->id) }}" role="button" class="btn btn-primary btn-sm">Edit</a>
                                   <a href="{{ route('admin.reseller.destroy', $user->id) }}" role="button" class="btn btn-danger btn-sm">Delete</a>
