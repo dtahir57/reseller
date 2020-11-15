@@ -80,6 +80,13 @@
                        {{ (Request::is('bank_detail/'.request()->route('id').'/edit')?'active':'') }}">
               <a href="{{ route('bank_detail.index') }}"><i class="fa fa-bank"></i> Bank Details</a>
             </li>
+            @if(Auth::user()->hasRole('Super_User'))
+            <li class="{{ (Request::is('admin/cities')?'active':'') }}
+                       {{ (Request::is('admin/city/create')?'active':'') }}
+                       {{ (Request::is('admin/city'.request()->route('id').'/edit')?'active':'') }}">
+              <a href="{{ route('admin.city.index') }}"><i class="fa fa-building-o"></i> Manage Cities</a>
+            </li>
+            @endif
         </ul>
       </nav>
       <!-- Sidebar Navigation end-->

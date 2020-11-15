@@ -157,6 +157,7 @@ class OrderController extends Controller
         }
         $data = [
             'payment_method' => 'cod',
+            'status' => 'processing',
             'payment_method_title' => 'Cash On Delivery',
             'set_paid' => false,
             'billing' => [

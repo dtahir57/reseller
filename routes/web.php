@@ -63,6 +63,18 @@ Route::group(['middleware' => 'auth'], function () {
         /**
          * Ending Routes For Admin\EarningController
          */
+        /**
+         * Starting Routes For Admin\CityController
+         */
+        Route::get('cities', 'Admin\CityController@index')->name('admin.city.index');
+        Route::get('city/create', 'Admin\CityController@create')->name('admin.city.create');
+        Route::post('city', 'Admin\CityController@store')->name('admin.city.store');
+        Route::get('city/{id}/edit', 'Admin\CityController@edit')->name('admin.city.edit');
+        Route::patch('city/{id}', 'Admin\CityController@update')->name('admin.city.update');
+        Route::get('city/destroy/{id}', 'Admin\CityController@destroy')->name('admin.city.delete');
+        /**
+         * Ending Routes For Admin\CityController
+         */
     });
     /**
      * Ending Routes For Super_User Role
