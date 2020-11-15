@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\Order;
+use DB;
 
 class HomeController extends Controller
 {
@@ -35,6 +36,36 @@ class HomeController extends Controller
             $returned_orders = Order::where('user_id', Auth::user()->id)->where('status', 'returned')->get();
         }
         return view('home', compact('processing_orders', 'delivered_orders', 'returned_orders'));
+    }
+
+    public function processing_orders()
+    {
+        if (Auth::user()->hasRole('Super_User')) {
+            $processing_orders = DB::table('orders')->where('status', 'processing')->paginate(10);
+        } else {
+            $processing_orders = DB::table('orders')->where('user_id', Auth::user()->id)->where('status', 'processing')->paginate(10);
+        }
+        return view('orders.processing_orders', compact('processing_orders'));
+    }
+
+    public function delivered_orders()
+    {
+        if (Auth::user()->hasRole('Super_User')) {
+            $delivered_orders = DB::table('orders')->where('status', 'delivered')->paginate(10);
+        } else {
+            $delivered_orders = DB::table('orders')->where('user_id', Auth::user()->id)->where('status', 'delivered')->paginate(10);
+        }
+        return view('orders.delivered_orders', compact('delivered_orders'));
+    }
+
+    public function returned_orders()
+    {
+        if (Auth::user()->hasRole('Super_User')) {
+            $returned_orders = DB::table('orders')->where('status', 'returned')->paginate(10);
+        } else {
+            $returned_orders = DB::table('orders')->where('user_id', Auth::user()->id)->where('status', 'returned')->paginate(10);
+        }
+        return view('orders.returned_orders', compact('returned_orders'));
     }
 
     public function logout()

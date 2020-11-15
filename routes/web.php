@@ -96,6 +96,9 @@ Route::group(['middleware' => 'auth'], function () {
         /**
          * Ending Routes For Order\OrderController
          */
+        Route::get('processing_orders', 'HomeController@processing_orders')->name('processing_orders');
+        Route::get('delivered_orders', 'HomeController@delivered_orders')->name('delivered_orders');
+        Route::get('returned_orders', 'HomeController@returned_orders')->name('returned_orders');
     });
 
     Route::group(['middleware' => 'role:Reseller'], function () {

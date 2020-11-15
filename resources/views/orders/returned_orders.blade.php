@@ -1,36 +1,12 @@
 @extends('layouts.master')
 
-@section('title', 'Manage Orders')
+@section('title', 'Returned Orders')
 
-@section('page-title', 'Orders')
+@section('page-title', 'Returned Orders')
 
 @section('content')
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-12">
-            @if(session('created'))
-                <li class="alert alert-success">{{ session('created') }}</li>
-            @endif
-            @if(session('uploaded'))
-                <li class="alert alert-success">{{ session('uploaded') }}</li>
-            @endif
-            @if(session('deleted'))
-                <li class="alert alert-success">{{ session('deleted') }}</li>
-            @endif
-            @foreach($errors->all() as $error)
-                <li class="alert alert-danger">{{ $error }}</li>
-            @endforeach
-            <div class="card">
-                <div class="card-body">
-                    <h4>Manage Orders</h4>
-                    @if(Auth::user()->hasRole('Super_User'))
-                    <button type="button" class="btn btn-info float-right" data-toggle="modal" data-target="#deliveredOrderModal"><i class="fa fa-file"></i> Upload Deliver Orders</button>
-                    <button type="button" class="btn btn-danger float-right mr-2" data-toggle="modal" data-target="#returnedOrderModal"><i class="fa fa-file"></i> Upload Retured Orders</button>
-                    @endif
-                    <a href="{{ route('order.create') }}" role="button" class="btn btn-success float-right mr-2"><i class="fa fa-plus"></i> Create New</a>
-                </div>
-            </div>
-        </div>
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
@@ -50,7 +26,7 @@
                               </tr>
                           </thead>
                           <tbody>
-                              @foreach($orders as $order)
+                              @foreach($returned_orders as $order)
                               @php
                                       $city = App\Models\City::find($order->shipping_city_id);
                                       @endphp
@@ -86,7 +62,7 @@
                               </tr>
                               @endforeach
                           </tbody>
-                          <tfoot>{!! $orders->render() !!}</tfoot>
+                          <tfoot>{!! $returned_orders->render() !!}</tfoot>
                       </table>
                     </div>
                 </div>
@@ -94,6 +70,4 @@
         </div>
     </div>
 </div>
-@include('orders.partials.deliver_order_modal')
-@include('orders.partials.returned_order_modal')
 @endsection

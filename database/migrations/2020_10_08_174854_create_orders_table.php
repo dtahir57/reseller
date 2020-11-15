@@ -27,7 +27,6 @@ class CreateOrdersTable extends Migration
             $table->string('billing_company');
             $table->string('billing_address_1');
             $table->string('billing_address_2');
-            $table->string('billing_city');
             $table->string('billing_state');
             $table->string('billing_postcode');
             $table->string('billing_country');
@@ -39,7 +38,6 @@ class CreateOrdersTable extends Migration
             $table->string('shipping_company');
             $table->string('shipping_address_1');
             $table->string('shipping_address_2');
-            $table->string('shipping_city');
             $table->string('shipping_state');
             $table->string('shipping_postcode');
             $table->string('shipping_country');

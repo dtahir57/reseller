@@ -21,6 +21,7 @@ use App\Models\Earning;
 use App\Http\Requests\OrdersRequest;
 use Rap2hpoutre\FastExcel\FastExcel;
 use App\User;
+use App\Models\City;
 
 class OrderController extends Controller
 {
@@ -58,7 +59,8 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view('orders.create');
+        $cities = City::all();
+        return view('orders.create', compact('cities'));
     }
 
     /**
@@ -81,7 +83,7 @@ class OrderController extends Controller
         $order->billing_company = $request->billing_company;
         $order->billing_address_1 = $request->billing_address_1;
         $order->billing_address_2 = $request->billing_address_2;
-        $order->billing_city = $request->billing_city;
+        // $order->billing_city = $request->billing_city;
         $order->billing_state = $request->billing_state;
         $order->billing_postcode = $request->billing_postcode;
         $order->billing_country = $request->billing_country;
@@ -93,10 +95,12 @@ class OrderController extends Controller
         $order->shipping_company = $request->shipping_company;
         $order->shipping_address_1 = $request->shipping_address_1;
         $order->shipping_address_2 = $request->shipping_address_2;
-        $order->shipping_city = $request->shipping_city;
+        // $order->shipping_city = $request->shipping_city;
         $order->shipping_state = $request->shipping_state;
         $order->shipping_postcode = $request->shipping_postcode;
         $order->shipping_country = $request->shipping_country;
+        $order->billing_city_id = $request->billing_city;
+        $order->shipping_city_id = $request->shipping_city;
         $order->total_price = $request->total;
         if ((int) $request->discount > 0) {
             $order->discount = $request->discount;

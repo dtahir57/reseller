@@ -114,8 +114,13 @@
                                 <input type="text" class="form-control" required name="billing_address_2" value="{{ old('billing_address_2') }}" placeholder="Billing Address 2" />
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for="City">City</label>
-                                <input type="text" class="form-control" required name="billing_city" value="{{ old('billing_city') }}" placeholder="City" />
+                                <label for="City">Billing City</label>
+                                <select name="billing_city" class="form-control">
+                                    <option selected disabled></option>
+                                    @foreach($cities as $city)
+                                    <option value="{{ $city->id }}">{{ $city->city_name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="State">State</label>
@@ -162,8 +167,13 @@
                                 <input type="text" class="form-control" required name="shipping_address_2" value="{{ old('shipping_address_2') }}" placeholder="Shipping Address 2" />
                             </div>
                             <div class="col-md-6 form-group">
-                                <label for="City">City</label>
-                                <input type="text" class="form-control" required name="shipping_city" value="{{ old('shipping_city') }}" placeholder="City" />
+                                <label for="City">Shipping City</label>
+                                <select name="shipping_city" class="form-control">
+                                    <option selected disabled></option>
+                                    @foreach($cities as $city)
+                                    <option value="{{ $city->id }}">{{ $city->city_name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="State">State</label>
