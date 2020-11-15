@@ -25,6 +25,7 @@
                                     <th>Admin Actual Price</th>
                                     <th>Discounted Price</th>
                                     <th>Amount To Be Paid (Actual Profit)</th>
+                                    <th>Total Profit</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -53,6 +54,13 @@
                                         @endif
                                     </td>
                                     <td>{{ $earning->actual_profit }} Rs</td>
+                                    <td>
+                                        @php
+                                            $total_earning = App\Models\Earning::where('reseller_id', $earning->reseller_id)->pluck('actual_profit')->toArray();
+                                            $total = array_sum($total_earning);
+                                        @endphp
+                                        {{ $total }} Rs
+                                    </td>
                                     <td>
                                         @if($earning->status == 'not_paid')
                                         <span class="text-info">NOT PAID</span>
