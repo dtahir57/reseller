@@ -21,6 +21,8 @@ Auth::routes();
 
 Route::post('user/register', 'UserController@register')->name('user.register');
 
+Route::post('user/login', 'UserController@login')->name('user.login');
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('terms_and_condition', 'UserController@terms_and_condition')->name('terms_and_condition');
@@ -39,6 +41,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('reseller/discount', 'Admin\ResellerController@reseller_discount')->name('admin.reseller.discount');
         Route::patch('reseller/{id}', 'Admin\ResellerController@update')->name('admin.reseller.update');
         Route::get('reseller/destroy/{id}', 'Admin\ResellerController@destroy')->name('admin.reseller.destroy');
+        Route::get('reseller/approve/{id}', 'Admin\ResellerController@approve')->name('admin.reseller.approve');
+        Route::get('reseller/disapprove/{id}', 'Admin\ResellerController@disapprove')->name('admin.reseller.disapprove');
         /**
          * Starting Routes For DiscountController
          */

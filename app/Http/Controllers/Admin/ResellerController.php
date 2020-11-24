@@ -131,4 +131,22 @@ class ResellerController extends Controller
             $user->update();
         }
     }
+
+    public function approve($reseller_id)
+    {
+        $user = User::find($reseller_id);
+        $user->status = 'approved';
+        $user->update();
+        Session::flash('approved', 'Reseller Approved Successfully!');
+        return redirect()->route('admin.reseller.index');
+    }
+
+    public function disapprove($reseller_id)
+    {
+        $user = User::find($reseller_id);
+        $user->status = 'pending';
+        $user->update();
+        Session::flash('disapproved', 'Reseller Disapproved Successfully!');
+        return redirect()->route('admin.reseller.index');
+    }
 }

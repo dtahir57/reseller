@@ -51,8 +51,8 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'number' => ['required', 'string', 'max:14'],
+            // 'email' => ['required', 'string', 'email', 'max:255'],
+            'number' => ['required', 'string', 'max:14', 'unique:users'],
             'city' => ['required', 'string', 'max:255'],
             'tac' => ['required', 'boolean'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -67,14 +67,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        // dd($data);
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'number' => $data['number'],
-            'city' => $data['city'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $user = new User;
+        $user->name = $data['name'];
+        if ($data['email']) {
+            $user->email = $data['email'];
+        } else {
+            $user->email = 'customer@rangreza.com';
+        }
+        $user->number = $data['number'];
+        $user->city = $data['city'];
+        $user->password = Hash::make($data['password']);
+        $user->save();
         $user->assignRole('Reseller');
         return $user;
     }
