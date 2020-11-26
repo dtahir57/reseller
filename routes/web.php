@@ -134,3 +134,23 @@ Route::group(['middleware' => 'auth'], function () {
      * Ending Routes For Bank\BankDetailsController
      */
 });
+
+Route::get('/clear-cache', function() {
+    Artisan::call('config:clear');
+    return 'cache cleared';
+});
+
+Route::get('/migrations', function() {
+    Artisan::call('migrate:fresh --seed');
+    return 'migrated';
+});
+
+Route::get('/migrate', function () {
+    Artisan::call('migrate');
+    return 'migrate';
+});
+
+Route::get('/schedule', function () {
+    Artisan::call('schedule:run');
+    return 'Scheduler Running!';
+});

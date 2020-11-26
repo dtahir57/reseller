@@ -48,7 +48,6 @@
                         </th>
                         <th>Phone Number</th>
                         <th>Discount %</th>
-                        <th>Balance</th>
                         <th>Status</th>
                         <th>
                           Actions
@@ -62,7 +61,6 @@
                               <td>{{ $user->email }}</td>
                               <td>{{ $user->number }}</td>
                               <td>{{ $user->discount }}</td>
-                              <td>{{ $user->balance }} Rs</td>
                               @if ($user->status === 'approved')
                               <td style="text-transform: uppercase;" class="text-success">{{ $user->status }}</td>
                               @else

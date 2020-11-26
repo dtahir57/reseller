@@ -18,19 +18,8 @@
                         <th>Product ID</th>
                         <th>Product Title</th>
                         {{-- <th>Product Description</th> --}}
-                        <th>SKU</th>
-                        <th>Virtual</th>
-                        <th>Downloadable</th>
-                        <th>Min Price</th>
                         <th>Max Price</th>
-                        <th>On Sale</th>
-                        <th>Stock Quantity</th>
-                        <th>Stock Status</th>
-                        <th>Rating Count</th>
-                        <th>Average Rating</th>
-                        <th>Total Sales</th>
-                        <th>Tax Status</th>
-                        <th>Tax Class</th>
+                        {{-- <th>On Sale</th> --}}
                         </tr>
                       </thead>
                       <tbody>
@@ -44,37 +33,14 @@
                             <td>{{ $p->ID }}</td>
                             <td>{{ $p->post_title }}</td>
                             {{-- <td>{!! $p->post_excerpt !!}</td> --}}
-                            <td>{{ $product->sku }}</td>
-                            <td>
-                                @if($product->virtual)
-                                    <span class="badge badge-success">YES</span>
-                                @else
-                                    <span class="badge badge-danger">NO</span>
-                                @endif
-                            </td>
-                            <td>
-                                @if($product->downloadable)
-                                    <span class="badge badge-success">YES</span>
-                                @else
-                                    <span class="badge badge-danger">NO</span>
-                                @endif
-                            </td>
-                            <td>{{ $product->min_price }}</td>
                             <td>{{ $product->max_price }}</td>
-                            <td>
+                            {{-- <td>
                                 @if($product->onsale)
                                     <span class="badge badge-success">YES</span>
                                 @else
                                     <span class="badge badge-danger">NO</span>
                                 @endif
-                            </td>
-                            <td>{{ $product->stock_quantity }}</td>
-                            <td>{{ $product->stock_status }}</td>
-                            <td>{{ $product->rating_count }}</td>
-                            <td>{{ $product->average_rating }}</td>
-                            <td>{{ $product->total_sales }}</td>
-                            <td>{{ $product->tax_status }}</td>
-                            <td>{{ $product->tax_class }}</td>
+                            </td> --}}
                         </tr>
                         @endif
                         @endforeach

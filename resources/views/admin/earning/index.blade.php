@@ -25,7 +25,7 @@
                                     <th>Admin Actual Price</th>
                                     <th>Discounted Price</th>
                                     <th>Amount To Be Paid (Actual Profit)</th>
-                                    <th>Total Profit</th>
+                                    <th>Balance</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>

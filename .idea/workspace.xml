@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ec84f7d3-6a4b-4bf8-828a-35b6400943bd" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/reseller-project.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/reseller-project.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/admin/resellers/index.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/admin/resellers/index.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,8 +147,14 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager">
@@ -169,10 +174,29 @@
       <workItem from="1602937108776" duration="761000" />
       <workItem from="1603460649717" duration="46000" />
       <workItem from="1605457991522" duration="69000" />
+      <workItem from="1606304182120" duration="3415000" />
+      <workItem from="1606327636319" duration="826000" />
+      <workItem from="1606330770475" duration="1266000" />
+      <workItem from="1606384448715" duration="2219000" />
+      <workItem from="1606392062160" duration="925000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="588" y="214" width="800" height="677" key="#Deployment" timestamp="1606306669004">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="588" y="214" width="800" height="677" key="#Deployment/67.27.1853.1053@67.27.1853.1053" timestamp="1606306669004" />
+    <state x="567" y="201" width="832" height="704" key="#SSH_Configurations" timestamp="1606306652774">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="567" y="201" width="832" height="704" key="#SSH_Configurations/67.27.1853.1053@67.27.1853.1053" timestamp="1606306652774" />
+    <state x="771" y="319" width="424" height="484" key="FileChooserDialogImpl" timestamp="1606306639113">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="771" y="319" width="424" height="484" key="FileChooserDialogImpl/67.27.1853.1053@67.27.1853.1053" timestamp="1606306639113" />
   </component>
 </project>

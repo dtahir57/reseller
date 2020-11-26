@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="1125ca12-f428-425b-b9a3-f56a3fa25d3b" name="BTC">
+        <fileTransfer rootFolder="/var/www" accessType="SFTP" host="165.232.47.199" port="22" sshConfigId="9b8e0665-179d-486c-8990-247766e2382e" sshConfig="root@165.232.47.199:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
