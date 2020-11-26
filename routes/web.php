@@ -28,6 +28,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('terms_and_condition', 'UserController@terms_and_condition')->name('terms_and_condition');
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('user/profile', 'HomeController@profile')->name('user.profile');
+    Route::patch('user/profile', 'HomeController@update_profile')->name('user.update');
     Route::get('logout', 'HomeController@logout')->name('user.logout');
     /**
      * Starting Routes For Super_User Role

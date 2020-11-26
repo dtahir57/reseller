@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Auth;
 use App\Models\Order;
 use DB;
+use App\User;
+use Session;
+use App\Http\Requests\UserRequest;
 
 class HomeController extends Controller
 {
@@ -72,5 +75,24 @@ class HomeController extends Controller
     {
         Auth::logout();
         return redirect()->route('login');
+    }
+
+    public function profile()
+    {
+        return view('profile.index');
+    }
+
+    public function update_profile(UserRequest $request)
+    {
+        $user = User::find(Auth::user()->id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->number = $request->number;
+        if ($request->profile_image) {
+            $user->profile_image = $request->profile_image->store('public/profile');
+        }
+        $user->update();
+        Session::flash('updated', 'Profile Settings Updated Successfully!');
+        return redirect()->back();
     }
 }

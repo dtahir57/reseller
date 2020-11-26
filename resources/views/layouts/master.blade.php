@@ -45,7 +45,15 @@
       <nav id="sidebar">
         <!-- Sidebar Header-->
         <div class="sidebar-header d-flex align-items-center">
-          <div class="avatar"><img src="{{ asset('assets/img/avatar-6.jpg')}}" class="img-fluid rounded-circle"></div>
+          <a href="{{ route('user.profile') }}">
+            <div class="avatar">
+              @if(Auth::user()->profile_image)
+              <img src="{{ Storage::url(Auth::user()->profile_image) }}" class="img-fluid rounded-circle">
+              @else
+              <img src="{{ asset('assets/img/avatar-6.jpg')}}" class="img-fluid rounded-circle">
+              @endif
+            </div>
+          </a>
           <div class="title">
             <h1 class="h5">{{ Auth::user()->name }}</h1>
             <p>{{ Auth::user()->getRoleNames()[0] }}</p>
