@@ -56,7 +56,7 @@
                                       @endphp
                               <tr>
                                   <td>{{ $loop->index + 1 }}</td>
-                                  <td>{{ $order->id }}</td>
+                                  <td>{{ $order->order_id }}</td>
                                   <td>{{ $order->customer_name }}</td>
                                   <td>{{ $order->total_price }}</td>
                                   <td>
@@ -80,8 +80,7 @@
                                       <p class="text-info" style="text-transform:uppercase;">{{ $order->status }}</p>
                                   </td>
                                   <td>
-                                      <a href="" type="button" class="btn btn-info btn-sm">Edit</a>
-                                      <a href="{{ route('order.destroy', $order->id) }}" type="button" class="btn btn-danger btn-sm">Delete</a>
+                                      <a href="{{ route('order.destroy', $order->id) }}" role="button" class="btn btn-danger btn-sm">Delete</a>
                                   </td>
                               </tr>
                               @endforeach

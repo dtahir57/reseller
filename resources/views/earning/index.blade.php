@@ -30,9 +30,12 @@
                             </thead>
                             <tbody>
                                 @foreach($earnings as $earning)
+                                @php
+                                    $order = App\Models\Order::find($earning->order_id);
+                                @endphp
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
-                                    <td>{{ $earning->order_id }}</td>
+                                    <td>{{ $order->order_id }}</td>
                                     @if($earning->screenshot_url)
                                     <td><img src="{{ Storage::url($earning->screenshot_url) }}" alt="Screenshot" width="100" /></td>
                                     @else

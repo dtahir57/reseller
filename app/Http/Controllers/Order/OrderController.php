@@ -71,11 +71,19 @@ class OrderController extends Controller
      */
     public function store(OrderRequest $request)
     {
+        // dd($request->qty);
         $actual_earning = array_sum($request->actual_price);
         $calculate = null;
         $order_total = (int) $request->total;
         $reseller_discount = Auth::user()->discount;
         // Create New Order
+
+        $total_price = 0;
+        $t_price = 0;
+        for($i = 0; $i < count($request->product_price); $i++) {
+            $per_product_price = $request->product_price[$i] * $request->qty[$i];
+            $total_price = $t_price + $per_product_price;
+        }
         $order = new Order;
         $order->user_id = Auth::user()->id;
         $order->billing_first_name = $request->billing_first_name;
@@ -101,21 +109,22 @@ class OrderController extends Controller
         $order->shipping_country = $request->shipping_country;
         $order->billing_city_id = $request->billing_city;
         $order->shipping_city_id = $request->shipping_city;
-        $order->total_price = $request->total;
+        $order->total_price = $total_price + 250;
         if ((int) $request->discount > 0) {
             $order->discount = $request->discount;
             $calculate = ((int) $request->discount / 100) * (int) $request->total;
             $discounted_total = (int) $request->total - $calculate;
-            $order->discounted_price = $discounted_total;
+            $order->discounted_price = $discounted_total + 250;
         }
         $order->save();
-        foreach($request->product_id as $product) {
+        for($i = 0; $i < count($request->product_id); $i++) {
             $order_has_product = new OrderHasProduct;
-            $order_has_product->product_id = $product;
+            $order_has_product->product_id = $request->product_id[$i];
+            $order_has_product->qty = $request->qty[$i];
             $order_has_product->order_id = $order->id;
             $order_has_product->save();
         }
-        $w_order = $this->store_wordpress_order($request);
+        $w_order = $this->store_wordpress_order($request, $total_price);
         // dd($w_order->id);
         $s_order = Order::find($order->id);
         $s_order->order_id = $w_order->id;
@@ -152,12 +161,12 @@ class OrderController extends Controller
         return redirect()->route('order.index');
     }
 
-    public function store_wordpress_order(Request $request)
+    public function store_wordpress_order(Request $request, $total_price)
     {
         $line_items = [];
         for($i = 0; $i < count($request->product_id); $i++) {
             $line_items[$i]['product_id'] = $request->product_id[$i];
-            $line_items[$i]['quantity'] = 1;
+            $line_items[$i]['quantity'] = $request->qty[$i];
         }
         $data = [
             'payment_method' => 'cod',
@@ -190,8 +199,8 @@ class OrderController extends Controller
             'shipping_lines' => [
                 [
                     'method_id' => 'flat_rate',
-                    'method_title' => 'Flat Rate',
-                    'total' => "'(int) $request->total'"
+                    'method_title' => 'Delivery Charges',
+                    'total' => "250"
                 ]
             ]
         ];

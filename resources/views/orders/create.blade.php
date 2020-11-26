@@ -62,14 +62,15 @@
                         @csrf
                         <div class="row">
                             <div class="col-md-12">
-                                <h5>Calculated Order Total: <span id="total_price">0</span>/- Rs </h5>
-                                <p><strong>(PLEASE NOTE: This calculated price also includes the discount on any product given by your admin)</strong></p>
+                                {{-- <h5>Calculated Order Total: <span id="total_price">0</span>/- Rs </h5> --}}
+                                {{-- <p><strong>(PLEASE NOTE: This calculated price also includes the discount on any product given by your admin)</strong></p> --}}
                                 <input type="hidden" name="total" id="total" value=0 />
                                 <div class="table-responsive">
                                     <table class="table">
                                         <thead>
                                             <tr>
                                                 <th>Product</th>
+                                                <th>Quantity</th>
                                                 <th style="width: 100px;">Action</th>
                                             </tr>
                                         </thead>
@@ -85,6 +86,7 @@
                                                     <input type="hidden" name="product_price[]" id="product_price_1" />
                                                     <input type="hidden" name="actual_price[]" id="actual_price_1" />
                                                 </td>
+                                                <td><input type="number" min=1 value="1" required name="qty[]" id="qty_1" class="form-control" placeholder="Quanity"></td>
                                                 <td>
                                                     <button type="button" class="btn btn-success" id="addMore"><i class="fa fa-plus"></i> Add</button>
                                                 </td>
@@ -280,7 +282,7 @@
         var i = 1;
         $('#addMore').click(function () {
             i++;
-            $('#dynamicField').append('<tr id="row'+i+'"><td><div id="product-search-'+i+'"><input type="text" class="form-control" placeholder="Product Title" name="products[]" id="product'+i+'" onkeyup="search_products('+i+')" /><div id="products-'+i+'"></div></div><div id="productView'+i+'"></div><input type="hidden" name="product_id[]" id="product_id_'+i+'" /><input type="hidden" name="product_price[]" id="product_price_'+i+'" /><input type="hidden" name="actual_price[]" id="actual_price_'+i+'" /></td><td><button type="button" class="btn btn-danger btn-remove" id="'+i+'">X</button></td></tr>');
+            $('#dynamicField').append('<tr id="row'+i+'"><td><div id="product-search-'+i+'"><input type="text" class="form-control" placeholder="Product Title" name="products[]" id="product'+i+'" onkeyup="search_products('+i+')" /><div id="products-'+i+'"></div></div><div id="productView'+i+'"></div><input type="hidden" name="product_id[]" id="product_id_'+i+'" /><input type="hidden" name="product_price[]" id="product_price_'+i+'" /><input type="hidden" name="actual_price[]" id="actual_price_'+i+'" /></td><td><input type="number" min=1 value="1" required name="qty[]" id="qty_'+i+'" class="form-control" placeholder="Quanity"></td><td><button type="button" class="btn btn-danger btn-remove" id="'+i+'">X</button></td></tr>');
         });
         $(document).on('click', '.btn-remove', function () {
             var button_id = $(this).attr("id");

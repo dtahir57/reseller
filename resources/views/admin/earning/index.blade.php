@@ -34,10 +34,11 @@
                                 @foreach($earnings as $earning)
                                 @php
                                     $user = App\User::find($earning->reseller_id);
+                                    $order = App\Models\Order::find($earning->order_id);
                                 @endphp
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
-                                    <td>{{ $earning->order_id }} Rs</td>
+                                    <td>{{ $order->order_id }}</td>
                                     @if($earning->screenshot_url)
                                     <td><img src="{{ Storage::url($earning->screenshot_url) }}" alt="Screenshot" width="100" /></td>
                                     @else

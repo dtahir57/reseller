@@ -31,7 +31,7 @@
               <div class="brand-text brand-big visible text-uppercase"><strong class="text-primary">RANG</strong><strong>REZA</strong></div>
               <div class="brand-text brand-sm"><strong class="text-primary">R</strong><strong>R</strong></div></a>
             <!-- Sidebar Toggle Btn-->
-            <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
+            <button class="sidebar-toggle active"><i class="fa fa-long-arrow-right"></i></button>
           </div>
           <div class="right-menu list-inline no-margin-bottom">
             <!-- Log out               -->
@@ -42,7 +42,7 @@
     </header>
     <div class="d-flex align-items-stretch">
       <!-- Sidebar Navigation-->
-      <nav id="sidebar">
+      <nav id="sidebar" class="shrinked">
         <!-- Sidebar Header-->
         <div class="sidebar-header d-flex align-items-center">
           <a href="{{ route('user.profile') }}">
@@ -98,7 +98,7 @@
         </ul>
       </nav>
       <!-- Sidebar Navigation end-->
-      <div class="page-content">
+      <div class="page-content active">
         <div class="page-header">
             <div class="container-fluid">
               <h2 class="h5 no-margin-bottom">@yield('page-title')</h2>
